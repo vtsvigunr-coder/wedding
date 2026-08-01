@@ -36,6 +36,8 @@ export function initPreloader(): void {
       // let the user try again instead of leaving them stuck.
       phase = 'idle';
       hint.classList.remove('preloader__hint--gone');
+      if (soundToggle) soundToggle.disabled = true;
+      music?.pause();
     });
     music?.play();
   });
