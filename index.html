@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <title>Zohan &amp; Rose — Invitation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300&family=Montserrat:wght@400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="site-header" id="site-header">
+      <p class="site-header__title">Invitation</p>
+      <button class="site-header__sound" id="sound-toggle" type="button" aria-label="Toggle music" aria-pressed="true">
+        <img src="/icons/Sound.svg" alt="" />
+      </button>
+    </header>
+
+    <section class="preloader" id="preloader">
+      <video class="preloader__video" id="preloader-video" src="/preloader.mp4" muted playsinline preload="auto"></video>
+      <div class="preloader__hint" id="preloader-hint">
+        <img class="preloader__chevron" src="/icons/Chevron_Up_Duo.svg" alt="" />
+        <button class="preloader__click" id="preloader-click" type="button">
+          <span>Сlick</span>
+          <img class="preloader__click-ring" src="/icons/click-ring.svg" alt="" />
+        </button>
+      </div>
+    </section>
+
+    <section class="hero" id="hero">
+      <img class="hero__bg" src="/hero/background-texture.png" alt="" />
+      <img class="hero__artwork" src="/hero/scroll-artwork.png" alt="" />
+      <div class="hero__text">
+        <p class="hero__eyebrow">Wedding Day</p>
+        <p class="hero__names">
+          Zohan <span class="hero__amp">&amp;</span> Rose
+        </p>
+        <p class="hero__date">27.09.26</p>
+      </div>
+      <div class="hero__scroll">
+        <p>Scroll down</p>
+        <img src="/icons/Arrows.svg" alt="" />
+      </div>
+    </section>
+
+    <audio id="bg-music" src="/music/wedding-music.mp3" loop preload="auto"></audio>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

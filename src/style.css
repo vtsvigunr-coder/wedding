@@ -1,0 +1,90 @@
+@font-face {
+  font-family: 'LT Remark';
+  src: url('/fonts/LTRemark-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'LT Remark';
+  src: url('/fonts/LTRemark-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'LT Remark';
+  src: url('/fonts/LTRemark-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'LT Remark';
+  src: url('/fonts/LTRemark-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'LT Remark';
+  src: url('/fonts/LTRemark-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'LT Remark';
+  src: url('/fonts/LTRemark-BlackItalic.otf') format('opentype');
+  font-weight: 900;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Good Vibes Pro';
+  src: url('/fonts/GoodVibesPro.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  --color-background: #f6f4f2;
+  --color-accent: #7e6f5d;
+  --color-mustard: #817355;
+  --font-remark: 'LT Remark', serif;
+  --font-goodvibes: 'Good Vibes Pro', cursive;
+  --font-montserrat: 'Montserrat', sans-serif;
+  --font-cormorant: 'Cormorant', serif;
+  --content-max-width: 480px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-background);
+  font-family: var(--font-remark);
+  color: #000;
+  overflow-x: hidden;
+}
+
+body {
+  max-width: var(--content-max-width);
+  margin-inline: auto;
+  position: relative;
+}
+
+body.scroll-locked {
+  overflow: hidden;
+  height: 100vh;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  background: none;
+}
