@@ -11,6 +11,8 @@
   justify-content: space-between;
   padding: 24px 32px;
   background: rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(8.5px);
+  -webkit-backdrop-filter: blur(8.5px);
   transform: translateY(0);
   transition: transform 0.3s ease;
 }
@@ -31,24 +33,21 @@
   height: 24px;
 }
 
-.site-header__sound--playing path {
-  animation: sound-wave 1.2s ease-in-out infinite;
-  transform-origin: center;
+.site-header__sound--playing .site-header__sound-wave {
+  animation: sound-wave-flow 1s linear infinite;
 }
 
-@keyframes sound-wave {
-  0%, 100% {
-    opacity: 0.6;
-    transform: scaleY(0.85);
+@keyframes sound-wave-flow {
+  from {
+    transform: translateX(0);
   }
-  50% {
-    opacity: 1;
-    transform: scaleY(1.15);
+  to {
+    transform: translateX(-5px);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-header__sound--playing path {
+  .site-header__sound--playing .site-header__sound-wave {
     animation: none;
   }
 }

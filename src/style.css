@@ -34,10 +34,25 @@
   font-weight: 900;
   font-style: italic;
 }
+@font-face {
+  font-family: 'Good Vibes Pro';
+  src: url('/fonts/GoodVibesPro-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
 :root {
   --color-background: #f6f4f2;
   --color-accent: #7e6f5d;
+  --color-dark-mustard: #6a5e43;
   --font-remark: 'LT Remark', serif;
+  --font-script: 'Good Vibes Pro', cursive;
+  --font-sans: 'Montserrat', sans-serif;
   --content-max-width: 480px;
 }
 
