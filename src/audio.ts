@@ -9,7 +9,8 @@ export function initSoundToggle(): void {
 
   const sync = () => {
     const isPlaying = !music.paused;
-    toggle.classList.toggle('site-header__sound--playing', isPlaying);
+    const playingClass = getSoundIconClass(isPlaying);
+    toggle.classList.toggle('site-header__sound--playing', playingClass !== '');
     toggle.setAttribute('aria-pressed', String(isPlaying));
   };
 
