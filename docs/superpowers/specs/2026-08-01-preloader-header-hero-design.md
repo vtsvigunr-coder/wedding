@@ -1,5 +1,29 @@
 # Preloader + Header + Hero Section — Design
 
+## Revision (post-implementation)
+
+During Task 6's full-flow verification, a real visual bug surfaced: the
+separate `.hero__artwork` image (`scroll-artwork.png`) wasn't cropped to
+match its Figma frame, so extra source-image content bled in below the
+card. Investigating this with the user revealed the intended design is
+simpler than originally specced: the preloader video's own last frame
+*is* the finished invitation card (text and all — it's baked into the
+video), so no separate Hero section markup/images/text are needed at
+all. The user's direction: on `video.ended`, leave the video frozen on
+its last frame as the background (don't fade the preloader out, don't
+swap in Hero images/text); only the "Scroll down" indicator should
+appear on top of that frozen frame.
+
+**As implemented, the "Hero section" described below is superseded:**
+`src/hero.css`, `public/hero/background-texture.png`, and
+`public/hero/scroll-artwork.png` were removed. The "Scroll down"
+indicator markup moved into `#preloader` as `.preloader__scroll`,
+hidden by default and revealed via a `.preloader--finished` class
+added in the video's `ended` handler (see `src/preloader.ts`). The rest
+of this document (Preloader, Header) still reflects the current
+implementation; only the "Hero section" section below is historical —
+kept for context on what the Figma frame showed, not what got built.
+
 ## Context
 
 Wedding invitation site, mobile-only. This is phase 1: the preloader

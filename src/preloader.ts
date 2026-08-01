@@ -30,7 +30,7 @@ export function initPreloader(onDone: () => void): void {
     phase = nextPreloaderPhase(phase, 'video-ended');
     if (phase !== 'done') return;
 
-    preloader.classList.add('preloader--done');
+    preloader.classList.add('preloader--finished');
     document.body.classList.remove('scroll-locked');
     onDone();
   });
