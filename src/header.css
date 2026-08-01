@@ -35,3 +35,19 @@
   width: 100%;
   height: 100%;
 }
+
+.site-header__sound--playing path {
+  animation: sound-wave 1.2s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes sound-wave {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scaleY(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1.15);
+  }
+}
