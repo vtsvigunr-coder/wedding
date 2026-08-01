@@ -1,3 +1,5 @@
 import './style.css';
+import './header.css';
+import { initHeader } from './header';
 
-console.log('app booted');
+initHeader();
