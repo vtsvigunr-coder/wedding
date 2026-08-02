@@ -25,3 +25,6 @@ dist-ssr
 
 # Subagent-driven-development scratch (ledger, briefs, reports)
 .superpowers/
+
+# Source video kept locally, only the built frame sequence is committed
+content/letter.mp4

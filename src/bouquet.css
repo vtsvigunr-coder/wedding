@@ -1,0 +1,116 @@
+/*
+ * Rides up over the pinned greeting: the negative margin brings it into view
+ * while the letter stage is still stuck, and the higher stacking order puts it
+ * in front of the envelope rather than behind it.
+ */
+.bouquet {
+  position: relative;
+  z-index: 2;
+  margin-top: -60vh;
+  height: 467px;
+  background: var(--color-accent);
+}
+
+/* With the stage collapsed there is no pin to ride up over; the bouquet's own
+   upward bleed already gives the overlap the design asks for. */
+@media (prefers-reduced-motion: reduce) {
+  .bouquet {
+    margin-top: 0;
+  }
+}
+
+/* The source art is landscape; the design turns it a quarter turn so its torn
+   edges land at the top and bottom of the section. */
+.bouquet__paper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 467px;
+  height: 375px;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  object-fit: fill;
+}
+
+.bouquet__flowers {
+  position: absolute;
+  left: 0;
+  top: -142px;
+  width: 375px;
+  height: 609px;
+  overflow: clip;
+  pointer-events: none;
+}
+
+.bouquet__flowers-image {
+  position: absolute;
+  left: -193.15px;
+  top: -46.19px;
+  width: 849.24px;
+  height: 849.24px;
+  max-width: none;
+  transform: rotate(31.36deg);
+}
+
+.bouquet__date {
+  position: absolute;
+  inset: 0;
+  color: var(--color-dark-mustard);
+}
+
+.bouquet__label {
+  position: absolute;
+  left: 50%;
+  top: 146px;
+  transform: translateX(-50%);
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.44px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.bouquet__title {
+  position: absolute;
+  left: 50%;
+  top: 237px;
+  transform: translateX(-50%);
+  margin: 0;
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: 61px;
+  line-height: 36px;
+  white-space: nowrap;
+}
+
+.bouquet__when {
+  position: absolute;
+  left: 50%;
+  top: 309px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.bouquet__when-part {
+  padding: 8px 10px;
+  border-top: 1px solid var(--color-dark-mustard);
+  border-bottom: 1px solid var(--color-dark-mustard);
+  font-family: var(--font-remark);
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.bouquet__when-part--time {
+  width: 100px;
+  text-align: center;
+}
+
+.bouquet__when-day {
+  font-family: var(--font-remark);
+  font-size: 49px;
+  line-height: 33px;
+  letter-spacing: 1.96px;
+  text-transform: uppercase;
+}

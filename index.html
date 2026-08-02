@@ -37,12 +37,32 @@
       </div>
     </section>
 
-    <section class="greeting" id="greeting">
-      <p class="greeting__label">Our wedding day</p>
-      <h2 class="greeting__title">Dear guest !</h2>
-      <img class="greeting__paper" src="/icons/greeting-paper.png" alt="" />
-      <img class="greeting__envelope" src="/icons/greeting-envelope.png" alt="" />
-      <img class="greeting__divider" src="/icons/divider.png" alt="" />
+    <div class="letter-stage" id="letter-stage">
+      <div class="letter-stage__pin">
+        <section class="greeting" id="greeting">
+          <p class="greeting__label">Our wedding day</p>
+          <h2 class="greeting__title">Dear guest !</h2>
+          <img class="greeting__paper" src="/icons/greeting-paper.png" alt="" />
+          <canvas class="greeting__envelope" id="letter-canvas" role="img" aria-label="An envelope opening to reveal the invitation"></canvas>
+          <img class="greeting__divider" src="/icons/divider.png" alt="" />
+        </section>
+      </div>
+    </div>
+
+    <section class="bouquet" id="bouquet">
+      <img class="bouquet__paper" src="/icons/bouquet-paper.webp" alt="" />
+      <div class="bouquet__flowers" id="bouquet-flowers">
+        <img class="bouquet__flowers-image" src="/icons/bouquet.webp" alt="" />
+      </div>
+      <div class="bouquet__date" id="bouquet-date">
+        <p class="bouquet__label">Wedding date</p>
+        <h2 class="bouquet__title">When?</h2>
+        <div class="bouquet__when">
+          <span class="bouquet__when-part">September</span>
+          <span class="bouquet__when-day">26</span>
+          <span class="bouquet__when-part bouquet__when-part--time">16:00</span>
+        </div>
+      </div>
     </section>
 
     <audio id="bg-music" src="/music/wedding-music.mp3" loop preload="auto"></audio>

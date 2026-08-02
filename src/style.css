@@ -67,7 +67,9 @@ body {
   background: var(--color-background);
   font-family: var(--font-remark);
   color: #000;
-  overflow-x: hidden;
+  /* `clip`, not `hidden`: `hidden` would make the body a scroll container and
+     that stops the letter stage's sticky pin from ever sticking. */
+  overflow-x: clip;
 }
 
 body {

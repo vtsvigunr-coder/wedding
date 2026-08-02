@@ -1,8 +1,44 @@
-.greeting {
+/*
+ * The stage is taller than the viewport; the pin sticks for the surplus, and
+ * that surplus is the scroll budget the envelope animation is scrubbed across.
+ */
+.letter-stage {
   position: relative;
-  min-height: 720px;
+  z-index: 1;
+  height: 250vh;
+}
+
+.letter-stage__pin {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: grid;
+  place-items: center;
   overflow: hidden;
   background: var(--color-background);
+}
+
+.greeting {
+  position: relative;
+  width: 100%;
+  height: 720px;
+  background: var(--color-background);
+}
+
+/*
+ * Nothing is scrubbed, so the stage's scroll budget would be two and a half
+ * screens of a motionless envelope. Collapse it back to the section's own
+ * height and let the page flow normally.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .letter-stage {
+    height: auto;
+  }
+
+  .letter-stage__pin {
+    position: static;
+    height: auto;
+  }
 }
 
 .greeting__label {
@@ -33,25 +69,32 @@
   white-space: nowrap;
 }
 
+/* Tracks the envelope's position: it only ever reads as a petal tucked behind
+   the envelope's right edge, so it moves whenever the envelope does. */
 .greeting__paper {
   position: absolute;
   left: 148px;
-  top: 217px;
+  top: 362px;
   width: 263px;
   height: 263px;
   transform: rotate(-159.17deg);
   object-fit: cover;
 }
 
+/*
+ * Sized to the frame sequence's own aspect, not the design's 422x348 crop: the
+ * frames also carry the headroom the flap needs once it swings open. Placed so
+ * the envelope's body sits where the design puts it and the opened flap rises
+ * to the design's 185px top edge, clear of the title.
+ */
 .greeting__envelope {
   position: absolute;
   left: 50%;
-  top: 185px;
+  top: 179px;
   transform: translateX(-50%);
-  width: 422px;
-  height: 348px;
-  object-fit: cover;
-  object-position: bottom;
+  display: block;
+  width: 339px;
+  height: 395px;
 }
 
 .greeting__divider {
