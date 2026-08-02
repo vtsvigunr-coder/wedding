@@ -64,13 +64,16 @@ function reveal({ root, targets }: RevealGroup): void {
     () => {
       // Once is enough: the section keeps its contents on the way back up.
       stop();
+      // Settle elements on both success and interruption: a cancelled animation
+      // must not leave them frozen mid-flight with Motion's inline values.
+      const settleAll = () => {
+        for (const target of targets) settle(target);
+      };
       animate(
         targets,
         { opacity: [0, 1], translate: [SHIFT, '0 0px'] },
         { delay: stagger(STAGGER_STEP), duration: DURATION, ease: [0.22, 1, 0.36, 1] },
-      ).finished.then(() => {
-        for (const target of targets) settle(target);
-      });
+      ).finished.then(settleAll, settleAll);
     },
     { amount: AMOUNT },
   );
