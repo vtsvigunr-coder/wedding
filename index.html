@@ -42,7 +42,6 @@
         <section class="greeting" id="greeting">
           <p class="greeting__label">Our wedding day</p>
           <h2 class="greeting__title">Dear guest !</h2>
-          <img class="greeting__paper" src="/icons/greeting-paper.png" alt="" />
           <canvas class="greeting__envelope" id="letter-canvas" role="img" aria-label="An envelope opening to reveal the invitation"></canvas>
           <img class="greeting__divider" src="/icons/divider.png" alt="" />
         </section>
@@ -64,6 +63,176 @@
         </div>
       </div>
     </section>
+
+    <section class="timeline" id="timeline">
+      <div class="timeline__pin">
+        <div class="timeline__frame" id="timeline-frame">
+          <h2 class="timeline__title">Program</h2>
+
+          <div class="timeline__route">
+            <svg class="timeline__line" viewBox="0 0 315.874 563.423" preserveAspectRatio="none" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <!-- The line is drawn as three subpaths. The heart travels them in
+                   reading order — the first one backwards, since it is drawn from
+                   the junction up to the line's top end. -->
+              <path class="timeline__segment" data-reverse d="M113.001 110.033C122.346 106.603 146.273 99.2974 170.467 91.602C201.837 81.6237 201.89 53.9496 171.678 40.877L78.2674 0.458885" />
+              <path class="timeline__segment" d="M113.001 110.033C86.3156 119.829 56.5148 133.824 23.0543 117.993C11.2298 112.399 6.13556 95.7232 17.9675 90.1445C37.4162 80.9746 73.3474 94.0661 113.001 110.033Z" />
+              <path class="timeline__segment" d="M113.001 110.033C302.768 233.459 407.767 90.1918 183.767 185.959C183.767 185.959 133.268 198.459 124.268 207.459C115.267 216.459 125.732 239.194 90.7676 247.459C55.8029 255.724 -6.23274 239.459 4.76726 224.459C15.7673 209.459 76.6236 243.312 124.268 278.459C210.934 327.626 308.267 381.959 315.267 326.459C322.267 270.959 -17.7328 412.959 1.26745 364.959C19.8112 318.112 309.767 566.959 299.767 472.459C297.267 449.959 230.767 483.959 160.767 504.459C8.96208 548.916 261.267 522.959 160.767 562.959" />
+            </svg>
+            <img class="timeline__lock" id="timeline-lock" src="/icons/timeline-lock.webp" alt="" />
+          </div>
+
+          <ol class="timeline__stops" id="timeline-stops">
+            <li class="timeline__stop timeline__stop--right" style="top: 192px" data-reach="215">
+              <p class="timeline__hour">3 PM</p>
+              <p class="timeline__what">Guest arrival</p>
+            </li>
+            <li class="timeline__stop timeline__stop--left" style="top: 262px" data-reach="285">
+              <p class="timeline__hour">4 PM</p>
+              <p class="timeline__what">Photoshoot</p>
+            </li>
+            <li class="timeline__stop timeline__stop--right timeline__stop--wide" style="top: 334px" data-reach="366">
+              <p class="timeline__hour">5 PM</p>
+              <p class="timeline__what">The start of<br />the celebration</p>
+            </li>
+            <li class="timeline__stop timeline__stop--left" style="top: 404px" data-reach="427">
+              <p class="timeline__hour">6 PM</p>
+              <p class="timeline__what">Wedding</p>
+            </li>
+            <li class="timeline__stop timeline__stop--right" style="top: 486px" data-reach="518">
+              <p class="timeline__hour">9 PM</p>
+              <p class="timeline__what">The End of the Wedding</p>
+            </li>
+          </ol>
+
+          <div class="timeline__car">
+            <img src="/icons/timeline-car.webp" alt="" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="location" id="location" data-reveal-group>
+      <p class="location__label" data-reveal>Where?</p>
+      <h2 class="location__title" data-reveal>Location</h2>
+
+      <!-- The single source of truth for the venue: the "Get directions" link is
+           built from these lines, so editing them re-aims the map search too. -->
+      <div class="location__address" id="location-address" data-reveal>
+        <p>Grand Celebration Hall</p>
+        <p>11th Avenue, New York State</p>
+      </div>
+
+      <div class="location__venue" data-reveal>
+        <img src="/icons/location-venue.webp" alt="The venue" />
+      </div>
+
+      <div class="location__actions" data-reveal>
+        <a
+          class="location__button"
+          id="location-directions"
+          href="https://www.google.com/maps/search/?api=1&amp;query=Grand%20Celebration%20Hall%2C%2011th%20Avenue%2C%20New%20York%20State"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src="/icons/location-pin.svg" alt="" />
+          <span>Get directions</span>
+        </a>
+
+        <button
+          class="location__button"
+          id="location-calendar"
+          type="button"
+          data-title="Zohan &amp; Rose — Wedding"
+          data-start="2026-09-26T16:00"
+          data-end="2026-09-26T21:00"
+        >
+          <img src="/icons/location-calendar.svg" alt="" />
+          <span>Calendar</span>
+        </button>
+      </div>
+
+      <img class="location__divider" src="/icons/divider.png" alt="" data-reveal />
+    </section>
+
+    <section class="dress-code" id="dress-code" data-reveal-group>
+      <p class="dress-code__label" data-reveal>What to wear</p>
+      <h2 class="dress-code__title" data-reveal>Dress code</h2>
+
+      <img class="dress-code__guests" src="/icons/dress-code.webp" alt="Guests in formal evening wear" data-reveal />
+
+      <div class="dress-code__text" data-reveal>
+        <p class="dress-code__rule">formal • black tie</p>
+        <div class="dress-code__notes">
+          <p>Tuxedo or dark suit for gentlemen. Long or<br />cocktail dress for ladies.</p>
+          <p>We kindly ask you to avoid wearing white. Shine with us!</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="rsvp" id="rsvp" data-reveal-group>
+      <div class="rsvp__intro" data-reveal>
+        <h2 class="rsvp__title">Confirm your attendance</h2>
+        <p class="rsvp__lead">Please let us know<br />if you can come.</p>
+      </div>
+
+      <!--
+        Answers go to a Google Form. To connect it: create the form, open its
+        pre-filled link, and copy the form id into `action` and each question's
+        `entry.<id>` into the matching `name` below (plus the two data-* fields,
+        which tell the validation which questions are required).
+      -->
+      <form
+        class="rsvp__card rsvp__form"
+        id="rsvp-form"
+        action="https://docs.google.com/forms/d/e/FORM_ID/formResponse"
+        method="post"
+        data-attendance-field="entry.1000001"
+        data-guest-field="entry.1000002"
+        data-reveal
+        novalidate
+      >
+        <fieldset class="rsvp__group">
+          <p class="rsvp__label">Will you be able to come?</p>
+          <div class="rsvp__choices">
+            <label class="rsvp__choice">
+              <input class="rsvp__radio" type="radio" name="entry.1000001" value="Yes, with pleasure!" />
+              <span>Yes, with pleasure!</span>
+            </label>
+            <label class="rsvp__choice">
+              <input class="rsvp__radio" type="radio" name="entry.1000001" value="Unfortunately, I can't." />
+              <span>Unfortunately, I can't.</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="rsvp__group rsvp__group--name">
+          <label class="rsvp__label" for="rsvp-name">Your first and last name</label>
+          <input class="rsvp__field" id="rsvp-name" type="text" name="entry.1000002" autocomplete="name" placeholder="Alexei" />
+        </div>
+
+        <div class="rsvp__group">
+          <label class="rsvp__label" for="rsvp-message">Message (optional)</label>
+          <textarea class="rsvp__field rsvp__field--message" id="rsvp-message" name="entry.1000003" rows="3"></textarea>
+        </div>
+
+        <button class="rsvp__send" id="rsvp-send" type="submit">Send</button>
+        <p class="rsvp__status" id="rsvp-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="final" id="final">
+      <img class="final__paper final__paper--buds" src="/icons/final-buds.webp" alt="" />
+      <img class="final__paper final__paper--flowers" src="/icons/final-bloom.webp" alt="A sheet of paper framed by flowers" />
+      <div class="final__text">
+        <p class="final__wish">We would be happy to share<br />this day together.</p>
+        <p class="final__names">Zohan &amp; Rose</p>
+      </div>
+    </section>
+
+    <footer class="site-footer" data-reveal-group>
+      <p class="site-footer__title" data-reveal>Wedding Day</p>
+      <img class="site-footer__ornament" src="/icons/footer-ornament.svg" alt="" data-reveal />
+    </footer>
 
     <audio id="bg-music" src="/music/wedding-music.mp3" loop preload="auto"></audio>
 
