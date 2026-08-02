@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
-import { STAGGER_STEP, collectGroups, revealDelay } from './reveal';
+import { afterEach, describe, expect, it } from 'vitest';
+import { STAGGER_STEP, collectGroups, initReveals, revealDelay } from './reveal';
 
 function mount(html: string): HTMLElement {
   const root = document.createElement('div');
@@ -66,5 +66,30 @@ describe('collectGroups', () => {
 
   it('is happy with a document that has no groups at all', () => {
     expect(collectGroups(mount('<p>plain</p>'))).toEqual([]);
+  });
+});
+
+describe('initReveals', () => {
+  afterEach(() => {
+    document.documentElement.classList.remove('js-reveal');
+    Reflect.deleteProperty(window, 'matchMedia');
+  });
+
+  it('does not arm anything when the visitor asked for less motion', () => {
+    // jsdom has no matchMedia of its own, so the stub is the whole query.
+    Object.defineProperty(window, 'matchMedia', {
+      configurable: true,
+      value: () => ({ matches: true }),
+    });
+
+    initReveals(mount(`<section data-reveal-group><p data-reveal></p></section>`));
+
+    expect(document.documentElement.classList.contains('js-reveal')).toBe(false);
+  });
+
+  it('stays quiet on a page with nothing to reveal', () => {
+    initReveals(mount('<p>plain</p>'));
+
+    expect(document.documentElement.classList.contains('js-reveal')).toBe(false);
   });
 });
