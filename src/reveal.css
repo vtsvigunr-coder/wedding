@@ -2,9 +2,16 @@
   The starting state is gated behind `js-reveal`, which reveal.ts adds itself.
   If the module never runs — a failed load, or a visitor who asked for reduced
   motion — nothing here applies and the page stays readable.
+
+  Only elements inside a `[data-reveal-group]` are ever collected and animated
+  by reveal.ts, so the selector below is scoped to match: a `[data-reveal]`
+  left outside a group would otherwise be hidden here and never revealed.
+
+  `--reveal-shift` is set by reveal.ts (from its `SHIFT` constant) so the
+  resting offset has one definition instead of two independent literals.
 */
-.js-reveal [data-reveal] {
+.js-reveal [data-reveal-group] [data-reveal] {
   opacity: 0;
-  translate: 0 24px;
+  translate: var(--reveal-shift);
   will-change: opacity, translate;
 }

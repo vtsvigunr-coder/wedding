@@ -1,22 +1,11 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { STAGGER_STEP, collectGroups, initReveals, revealDelay } from './reveal';
+import { collectGroups, initReveals } from './reveal';
 
 function mount(html: string): HTMLElement {
   const root = document.createElement('div');
   root.innerHTML = html;
   return root;
 }
-
-describe('revealDelay', () => {
-  it('lets the first element start immediately', () => {
-    expect(revealDelay(0)).toBe(0);
-  });
-
-  it('spaces the rest a step apart', () => {
-    expect(revealDelay(1)).toBeCloseTo(STAGGER_STEP);
-    expect(revealDelay(3)).toBeCloseTo(STAGGER_STEP * 3);
-  });
-});
 
 describe('collectGroups', () => {
   it('reads a group in document order', () => {

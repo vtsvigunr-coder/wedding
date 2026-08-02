@@ -28,10 +28,6 @@ export interface RevealGroup {
   targets: HTMLElement[];
 }
 
-export function revealDelay(index: number): number {
-  return index * STAGGER_STEP;
-}
-
 export function collectGroups(root: ParentNode): RevealGroup[] {
   const groups: RevealGroup[] = [];
 
@@ -53,9 +49,12 @@ export function collectGroups(root: ParentNode): RevealGroup[] {
  * outlives the animation.
  */
 function settle(target: HTMLElement): void {
+  // Removing the attribute first is unconditionally safe: it drops the
+  // element out of the hiding rule before the inline styles that were
+  // overriding it are cleared, so the two statements can never disagree.
+  target.removeAttribute('data-reveal');
   target.style.removeProperty('opacity');
   target.style.removeProperty('translate');
-  target.removeAttribute('data-reveal');
 }
 
 function reveal({ root, targets }: RevealGroup): void {
@@ -87,6 +86,10 @@ export function initReveals(root: ParentNode = document): void {
   const groups = collectGroups(root);
   if (groups.length === 0) return;
 
+  // SHIFT is the single source of truth for the resting offset: the
+  // stylesheet reads it back through this custom property instead of
+  // carrying its own copy of the value.
+  document.documentElement.style.setProperty('--reveal-shift', SHIFT);
   document.documentElement.classList.add('js-reveal');
   for (const group of groups) reveal(group);
 }
