@@ -57,8 +57,10 @@ export const DURATION = 0.7;       // с на элемент
 export const SHIFT = 24;           // px подъёма
 export const AMOUNT = 0.15;        // доля группы в кадре для старта
 
+export interface RevealGroup { root: HTMLElement; targets: HTMLElement[] }
+
 export function revealDelay(index: number): number
-export function collectGroups(root: ParentNode): HTMLElement[][]
+export function collectGroups(root: ParentNode): RevealGroup[]
 export function initReveals(root?: ParentNode): void
 ```
 
@@ -68,9 +70,11 @@ export function initReveals(root?: ParentNode): void
 2. Ставит `js-reveal` на `document.documentElement`.
 3. Для каждой группы из `collectGroups()` вешает `inView(group, callback, { amount: AMOUNT })`; коллбэк анимирует элементы группы и сразу вызывает возвращённую `inView` функцию остановки, чтобы появление было одноразовым.
 
-Анимация: `{ opacity: [0, 1], transform: ['translateY(24px)', 'none'] }`, `{ delay: stagger(STAGGER_STEP), duration: DURATION, ease: [0.22, 1, 0.36, 1] }`.
+Анимация: `{ opacity: [0, 1], translate: ['0 24px', '0 0px'] }`, `{ delay: stagger(STAGGER_STEP), duration: DURATION, ease: [0.22, 1, 0.36, 1] }`.
 
-По завершении с каждого элемента снимаются инлайновые `opacity`/`transform`, оставленные Motion, и убирается атрибут `data-reveal`. Иначе инлайновый `transform: none` пережил бы анимацию и перебил бы существующие CSS-трансформы секций.
+Двигаем `translate`, а не `transform`. В Location и Dress code почти все элементы центрируются через `transform: translateX(-50%)`; анимация `transform` затёрла бы это центрирование и швырнула бы элементы вправо на полширины. `translate` — независимое CSS-свойство, оно применяется до `transform` и складывается с ним. В списке transform-свойств Motion (`transformPropOrder`) `translate` отсутствует, поэтому библиотека передаёт его в CSS как обычное свойство и в трансформ не вмешивается.
+
+По завершении с каждого элемента снимаются инлайновые `opacity`/`translate`, оставленные Motion, и убирается атрибут `data-reveal`.
 
 `collectGroups()` собирает элементы в порядке документа и не заглядывает во вложенные `data-reveal-group` (на сегодня вложенных нет, но правило фиксируем, чтобы поведение не зависело от будущей вёрстки). Группы без `data-reveal` внутри отбрасываются.
 
@@ -79,8 +83,8 @@ export function initReveals(root?: ParentNode): void
 ```css
 .js-reveal [data-reveal] {
   opacity: 0;
-  transform: translateY(24px);
-  will-change: opacity, transform;
+  translate: 0 24px;
+  will-change: opacity, translate;
 }
 ```
 
