@@ -69,18 +69,6 @@
   white-space: nowrap;
 }
 
-/* Tracks the envelope's position: it only ever reads as a petal tucked behind
-   the envelope's right edge, so it moves whenever the envelope does. */
-.greeting__paper {
-  position: absolute;
-  left: 148px;
-  top: 362px;
-  width: 263px;
-  height: 263px;
-  transform: rotate(-159.17deg);
-  object-fit: cover;
-}
-
 /*
  * Sized to the frame sequence's own aspect, not the design's 422x348 crop: the
  * frames also carry the headroom the flap needs once it swings open. Placed so

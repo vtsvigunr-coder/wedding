@@ -1,0 +1,73 @@
+/*
+ * The closing sheet of paper. Two paintings of it are stacked in the same
+ * place — buds, and the same branches in full flower — and the scrub cross-
+ * fades between them while growing both, so the corners open as the section
+ * rises. The variables below are what it writes; the values here are what a
+ * scriptless page and a reduced-motion visitor get, which is the sheet already
+ * bloomed with its words on it.
+ */
+.final {
+  position: relative;
+  z-index: 2;
+  height: 720px;
+  background: var(--color-background);
+  --bloom-scale: 1;
+  --buds: 0;
+  --flowers: 1;
+  --text: 1;
+}
+
+.final__paper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 366px;
+  height: 651px;
+  object-fit: cover;
+  transform: translate(-50%, -50%) scale(var(--bloom-scale));
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.final__paper--buds {
+  opacity: var(--buds);
+}
+
+.final__paper--flowers {
+  opacity: var(--flowers);
+}
+
+.final__text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, calc(-50% + (1 - var(--text)) * 12px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 206px;
+  text-align: center;
+  opacity: var(--text);
+}
+
+/* 181px in the design; the browser's LT Remark needs a few more to hold the
+   design's line break. */
+.final__wish {
+  margin: 0;
+  width: 185px;
+  font-family: var(--font-remark);
+  font-size: 16px;
+  line-height: normal;
+  color: #452d2d;
+}
+
+.final__names {
+  margin: 0;
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: 31px;
+  line-height: normal;
+  color: var(--color-dark-mustard);
+  white-space: nowrap;
+}

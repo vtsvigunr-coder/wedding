@@ -1,0 +1,186 @@
+/*
+ * The programme. A single drawn line runs the height of the section and a gold
+ * heart-shaped lock is scrubbed along it as the section rises through the
+ * viewport; each stop fades in as the lock reaches its height.
+ */
+.timeline {
+  position: relative;
+  z-index: 2;
+  /* Taller than the viewport; the pin sticks for the surplus, and that surplus
+     is the scroll budget the heart's descent is scrubbed across. */
+  height: 300vh;
+  background: var(--color-accent);
+}
+
+.timeline__pin {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: grid;
+  /* Anchored to the bottom rather than centred: centring pushes the title up
+     under the fixed header, which clips its ascenders. */
+  align-items: end;
+  justify-items: center;
+  overflow: hidden;
+  background: var(--color-accent);
+}
+
+/*
+ * The design lays the section out on a fixed 375x782 canvas. `--fit` shrinks
+ * the whole thing to fit shorter viewports rather than cropping the line, and
+ * is written by the scrub; the stylesheet's 1 is what a full-height screen and
+ * a scriptless page both get.
+ */
+.timeline__frame {
+  position: relative;
+  flex: none;
+  width: 375px;
+  height: 782px;
+  transform: scale(var(--fit, 1));
+  transform-origin: bottom center;
+}
+
+.timeline__title {
+  position: absolute;
+  left: 50%;
+  top: 50px;
+  transform: translateX(-50%);
+  margin: 0;
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: 61px;
+  line-height: 36px;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.timeline__route {
+  position: absolute;
+  left: 34.23px;
+  top: 102.5px;
+  width: 314.87px;
+  height: 562.5px;
+}
+
+.timeline__line {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.timeline__segment {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+/*
+ * Anchored at the route's origin; the scrub only ever writes `translate`, and
+ * the negative margins centre the lock on whichever point it is handed.
+ */
+.timeline__lock {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 43px;
+  height: 65px;
+  margin-left: -21.5px;
+  margin-top: -32.5px;
+  object-fit: cover;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.timeline__stops {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline__stop {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  width: 86px;
+  color: #fff;
+  /* Written by the scrub, and by the stylesheet alone under reduced motion. */
+  --reveal: 0;
+  opacity: var(--reveal);
+  transform: translateY(calc((1 - var(--reveal)) * 10px));
+}
+
+.timeline__stop--left {
+  left: 26px;
+}
+
+.timeline__stop--right {
+  left: 253px;
+}
+
+.timeline__stop--wide {
+  left: 243px;
+  width: 106px;
+}
+
+.timeline__hour {
+  margin: 0;
+  font-family: var(--font-remark);
+  font-size: 30px;
+  line-height: normal;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.timeline__what {
+  margin: 0;
+  font-family: var(--font-remark);
+  font-size: 16px;
+  line-height: normal;
+  text-align: center;
+}
+
+/* The art carries transparent headroom the design crops away. */
+.timeline__car {
+  position: absolute;
+  left: calc(50% + 0.5px);
+  top: 665px;
+  transform: translateX(-50%);
+  width: 102px;
+  height: 91px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.timeline__car img {
+  position: absolute;
+  left: 0;
+  top: -36.87%;
+  width: 100%;
+  height: 174.3%;
+  max-width: none;
+}
+
+/*
+ * Nothing is scrubbed, so the stage's scroll budget would be two extra screens
+ * of a motionless programme. Collapse it back to the frame's own height, let
+ * the page flow normally, and show every stop.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .timeline {
+    height: auto;
+  }
+
+  .timeline__pin {
+    position: static;
+    height: auto;
+  }
+
+  .timeline__stop {
+    --reveal: 1;
+  }
+}

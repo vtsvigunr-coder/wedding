@@ -1,0 +1,25 @@
+/* The closing bar. One line of text with the invitation's ornament at its end. */
+.site-footer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 40px 31px;
+  background: #f1eee9;
+}
+
+.site-footer__title {
+  margin: 0;
+  font-family: var(--font-remark);
+  font-size: 20px;
+  line-height: 24px;
+  color: #452d2d;
+}
+
+.site-footer__ornament {
+  flex: none;
+  width: 14px;
+  height: 14px;
+}

@@ -1,0 +1,211 @@
+/*
+ * The RSVP card. Unlike the sections above it this one is laid out in flow
+ * rather than on a fixed canvas — it is all stacked boxes in the design too,
+ * and letting it grow means a long validation message or a wrapped label
+ * pushes the card taller instead of spilling out of it.
+ */
+.rsvp {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding: 40px 32px 60px;
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.rsvp__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  text-align: center;
+}
+
+.rsvp__title {
+  margin: 0;
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: 61px;
+  line-height: 53px;
+}
+
+.rsvp__lead {
+  margin: 0;
+  font-family: var(--font-remark);
+  font-size: 16px;
+  line-height: normal;
+}
+
+.rsvp__card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 312px;
+  max-width: 100%;
+  padding: 24px;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--color-accent);
+}
+
+/* `fieldset` is used for the radio group's semantics, not its chrome. */
+.rsvp__group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+/* The design gives the name field a tighter gap than the other two labels. */
+.rsvp__group--name {
+  gap: 12px;
+}
+
+.rsvp__label {
+  margin: 0;
+  font-family: var(--font-remark);
+  font-size: 16px;
+  line-height: normal;
+}
+
+.rsvp__choices {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rsvp__choice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 16px 0 9px;
+  border: 1px solid var(--rsvp-border, #dad5d5);
+  border-radius: 94px;
+  font-family: var(--font-remark);
+  font-size: 14px;
+  line-height: 18px;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+/* The chosen answer takes the same light brown the active field is drawn in. */
+.rsvp__choice:has(input:checked) {
+  --rsvp-border: var(--color-light-brown);
+}
+
+.rsvp__choice:focus-within {
+  --rsvp-border: var(--color-light-brown);
+}
+
+/*
+ * A real radio, restyled rather than replaced: the keyboard, the grouping and
+ * the screen-reader announcement all come for free, and the ring and dot are
+ * the whole of the design's icon.
+ */
+.rsvp__radio {
+  appearance: none;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  border: 1.5px solid var(--color-light-brown);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.rsvp__radio:checked {
+  /* The dot is drawn with a ring of background rather than a child element,
+     which keeps the control a single box. */
+  background: var(--color-light-brown);
+  box-shadow: inset 0 0 0 3px #fff;
+}
+
+.rsvp__radio:focus-visible {
+  outline: 2px solid var(--color-light-brown);
+  outline-offset: 2px;
+}
+
+.rsvp__field {
+  height: 34px;
+  padding: 0 16px 0 12px;
+  border: 1px solid #dad5d5;
+  border-radius: 94px;
+  background: none;
+  font-family: var(--font-remark);
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-accent);
+  transition: border-color 0.2s ease;
+}
+
+.rsvp__field--message {
+  height: 71px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  resize: none;
+}
+
+.rsvp__field:focus {
+  border-color: var(--color-light-brown);
+  outline: none;
+}
+
+.rsvp__field::placeholder {
+  color: #b9aea1;
+}
+
+.rsvp__send {
+  height: 42px;
+  padding: 7px 24px;
+  border-radius: 5px;
+  background: var(--color-accent);
+  font-family: var(--font-remark);
+  font-size: 16px;
+  line-height: normal;
+  color: #fff;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.rsvp__send:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.rsvp__send:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.rsvp__send:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/*
+ * Empty until there is something to say, and collapsed with it so the card
+ * does not carry a reserved gap the whole time.
+ */
+.rsvp__status {
+  margin: 0;
+  font-family: var(--font-remark);
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+}
+
+.rsvp__status:empty {
+  display: none;
+}
+
+.rsvp__form[data-state='error'] .rsvp__status {
+  color: #b4553f;
+}
+
+.rsvp__form[data-state='sent'] .rsvp__status {
+  color: var(--color-accent);
+}

@@ -19,31 +19,43 @@
   }
 }
 
-/* The source art is landscape; the design turns it a quarter turn so its torn
-   edges land at the top and bottom of the section. */
+/*
+ * The source art is portrait with its torn edges down the left and right sides;
+ * the design turns it a quarter turn so they land at the top and bottom of the
+ * section. Because the turn swaps the axes, the box is stated pre-rotation: its
+ * width is the section's height and its height covers the section's width.
+ * `max-width` has to be released — the blanket `img { max-width: 100% }` would
+ * otherwise cap the long side at the section's width and leave the paper ending
+ * short of the section's bottom edge.
+ */
 .bouquet__paper {
   position: absolute;
   left: 50%;
   top: 50%;
   width: 467px;
-  height: 375px;
+  height: var(--content-max-width);
+  max-width: none;
   transform: translate(-50%, -50%) rotate(-90deg);
-  object-fit: fill;
+  object-fit: cover;
+  object-position: bottom;
 }
 
+/* Spans the full section width, not the design's 375px, so the flowers still
+   cover the paper's top torn edge on wider viewports. */
 .bouquet__flowers {
   position: absolute;
   left: 0;
+  right: 0;
   top: -142px;
-  width: 375px;
   height: 609px;
   overflow: clip;
   pointer-events: none;
 }
 
+/* The design centres the rotated art 43.97px right of the container's midpoint. */
 .bouquet__flowers-image {
   position: absolute;
-  left: -193.15px;
+  left: calc(50% - 380.65px);
   top: -46.19px;
   width: 849.24px;
   height: 849.24px;
