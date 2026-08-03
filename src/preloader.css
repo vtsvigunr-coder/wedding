@@ -8,13 +8,23 @@
   background: var(--color-background);
 }
 
-/* Once the video finishes, it becomes the permanent hero backdrop:
-   drop out of the fixed overlay so later sections in the document can
-   scroll into view below it. */
+/*
+ * Once the video finishes, it becomes the permanent hero backdrop: drop out of
+ * the fixed overlay so later sections in the document can scroll into view
+ * below it.
+ *
+ * `svh`, not `vh`. A fixed `inset: 0` box covers what is actually on screen,
+ * which on a phone is the viewport minus the browser's own chrome; `100vh` is
+ * the taller figure the page would get with that chrome hidden. Sizing the two
+ * states in different units is what made the video jump larger the moment it
+ * ended. `svh` is the small viewport — the same box the overlay covered, and
+ * a fixed one, so it does not resize again as the address bar comes and goes.
+ */
 .preloader--finished {
   position: relative;
   inset: auto;
   min-height: 100vh;
+  min-height: 100svh;
 }
 
 .preloader__video {
@@ -66,6 +76,18 @@
   .preloader__scroll img,
   .preloader__click--waiting {
     animation: none;
+  }
+
+  /* The hint still arrives, it just arrives at once. */
+  .preloader__scroll p,
+  .preloader__scroll img,
+  .preloader__blur::after,
+  .preloader__blur > div {
+    transition: none;
+  }
+
+  .preloader__scroll p {
+    transform: none;
   }
 }
 
@@ -122,19 +144,42 @@
   align-items: center;
   gap: 7px;
   text-align: center;
-  opacity: 0;
   pointer-events: none;
-  transition: opacity 0.6s ease;
 }
 
 /*
- * A progressive blur. One `backdrop-filter` can only blur by a single radius,
- * and masking it merely fades a uniformly blurred sheet in and out — which
- * leaves a seam where the sheet ends, and blurs the flowers just as hard right
- * under the label as it does at the top edge. Stacking sheets whose radius
- * doubles, each masked to fade out lower than the one below it, ramps the real
- * radius: nothing at the top, all six sheets' worth against the bottom edge.
+ * The hint arrives piece by piece rather than as one faded block. Fading the
+ * block would mean `opacity` on this element, which makes it a backdrop root:
+ * the sheets inside would have nothing to blur until the fade finished, so the
+ * blur snapped in at the very end instead of arriving with the label. So the
+ * label and arrow fade on their own, and the blur eases in by growing its
+ * radius from nothing — the one property that actually reads as blurring.
  */
+.preloader__scroll p {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.preloader__scroll img {
+  opacity: 0;
+  /* A beat behind the label, so the two do not arrive as one slab. */
+  transition: opacity 0.7s ease 0.15s;
+}
+
+.preloader--finished .preloader__scroll {
+  pointer-events: auto;
+}
+
+.preloader--finished .preloader__scroll p {
+  opacity: 1;
+  transform: none;
+}
+
+.preloader--finished .preloader__scroll img {
+  opacity: 1;
+}
+
 /*
  * Two things this element must not do, both of which silently leave it with
  * nothing to blur:
@@ -160,19 +205,42 @@
   position: absolute;
   inset: 0;
   background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: opacity 0.7s ease;
   -webkit-mask-image: linear-gradient(to top, black 45%, transparent 100%);
   mask-image: linear-gradient(to top, black 45%, transparent 100%);
 }
 
+/*
+ * A progressive blur. One `backdrop-filter` can only blur by a single radius,
+ * and masking it merely fades a uniformly blurred sheet in and out — which
+ * leaves a seam where the sheet ends, and blurs the flowers just as hard right
+ * under the label as it does at the top edge. Stacking sheets whose radius
+ * doubles, each masked to fade out lower than the one below it, ramps the real
+ * radius: nothing at the top, all six sheets' worth against the bottom edge.
+ *
+ * They start at zero so the hero is untouched while the video plays, and grow
+ * into their radius when it finishes.
+ */
 .preloader__blur > div {
   position: absolute;
   inset: 0;
-  backdrop-filter: blur(var(--radius));
-  -webkit-backdrop-filter: blur(var(--radius));
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+  transition: backdrop-filter 0.7s ease, -webkit-backdrop-filter 0.7s ease;
   /* Opaque from the bottom edge up to `--solid`, then gone by `--fade`. The
      bands overlap, which is what keeps the ramp free of banding. */
   -webkit-mask-image: linear-gradient(to top, black var(--solid), transparent var(--fade));
   mask-image: linear-gradient(to top, black var(--solid), transparent var(--fade));
+}
+
+.preloader--finished .preloader__blur::after {
+  opacity: 1;
+}
+
+.preloader--finished .preloader__blur > div {
+  backdrop-filter: blur(var(--radius));
+  -webkit-backdrop-filter: blur(var(--radius));
 }
 
 .preloader__blur > div:nth-child(1) { --radius: 0.25px; --solid: 60%; --fade: 100%; }
@@ -181,11 +249,6 @@
 .preloader__blur > div:nth-child(4) { --radius: 2px; --solid: 24%; --fade: 52%; }
 .preloader__blur > div:nth-child(5) { --radius: 4px; --solid: 12%; --fade: 36%; }
 .preloader__blur > div:nth-child(6) { --radius: 8px; --solid: 0%; --fade: 20%; }
-
-.preloader--finished .preloader__scroll {
-  opacity: 1;
-  pointer-events: auto;
-}
 
 /* Lifted over the blur, which is positioned and would otherwise paint on top. */
 .preloader__scroll p,
