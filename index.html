@@ -11,6 +11,23 @@
          trip on exactly the screen the visitor is waiting on. -->
     <link rel="preload" as="font" type="font/woff2" href="/fonts/LTRemark-Regular.woff2" crossorigin />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/GoodVibesPro-Regular.woff2" crossorigin />
+
+    <!--
+      The scroll hint belongs to the finished hero, not to the preloader. This
+      is inlined rather than left to the stylesheet so it applies while the HTML
+      is still parsing: the bundle arrives later — in dev only once the module
+      has run — which was long enough to flash the label and arrow over the
+      preloader before hiding them again.
+
+      Class selectors, at the same specificity as the stylesheet's own, so the
+      `.preloader--finished` rules still win and reveal the hint on cue.
+    -->
+    <style>
+      .preloader__scroll p,
+      .preloader__scroll img {
+        opacity: 0;
+      }
+    </style>
   </head>
   <body>
     <header class="site-header" id="site-header">
