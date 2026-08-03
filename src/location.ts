@@ -99,7 +99,11 @@ export function initLocation(): void {
   const calendar = document.getElementById('location-calendar');
   if (!address) return;
 
-  const query = readAddress(address);
+  // The printed lines are translated; the search is not. `data-maps-query`
+  // pins it to one language so the link means the same thing whichever the
+  // guest is reading, and the fallback keeps this working if it is ever
+  // dropped from the markup.
+  const query = address.dataset.mapsQuery?.trim() || readAddress(address);
 
   if (directions && query) {
     directions.href = mapsUrl(query);

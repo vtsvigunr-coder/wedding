@@ -60,18 +60,42 @@
   color: #000;
 }
 
-.lang__globe {
+/*
+ * The design frames both icons in a box larger than the drawing — 14.33px of
+ * globe in a 16px box, and an arrow only 6.75x3.65 in a 12px one. The exported
+ * SVGs carry `preserveAspectRatio="none"`, so sizing them to the frame both
+ * enlarged and distorted them. Centre the drawing at its own size instead.
+ */
+.lang__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  overflow: hidden;
+}
+
+.lang__icon--globe {
   width: 16px;
   height: 16px;
 }
 
-.lang__chevron {
+.lang__icon--globe img {
+  width: 14.3335px;
+  height: 14.3334px;
+}
+
+.lang__icon--chevron {
   width: 12px;
   height: 12px;
   transition: transform 0.2s ease;
 }
 
-.lang--open .lang__chevron {
+.lang__icon--chevron img {
+  width: 6.75px;
+  height: 3.64645px;
+}
+
+.lang--open .lang__icon--chevron {
   transform: rotate(180deg);
 }
 
@@ -120,7 +144,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lang__chevron,
+  .lang__icon--chevron,
   .lang__menu {
     transition: none;
   }

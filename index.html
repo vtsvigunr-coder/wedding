@@ -47,9 +47,12 @@
 
         <div class="lang" id="lang">
           <button class="lang__button" id="lang-button" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Change language" data-i18n-attr="aria-label:header.language">
-            <img class="lang__globe" src="/icons/globe.svg" alt="" />
+            <!-- Each icon sits centred in the box the design gives it rather
+                 than filling it: the artwork is smaller than its frame, and
+                 stretching it to the frame is what made it look heavy. -->
+            <span class="lang__icon lang__icon--globe"><img src="/icons/globe.svg" alt="" /></span>
             <span class="lang__code" id="lang-code">EN</span>
-            <img class="lang__chevron" src="/icons/chevron-down.svg" alt="" />
+            <span class="lang__icon lang__icon--chevron"><img src="/icons/chevron-down.svg" alt="" /></span>
           </button>
           <ul class="lang__menu" id="lang-menu" role="listbox">
             <li><button class="lang__option" type="button" role="option" aria-selected="true" data-lang="en">EN</button></li>
@@ -153,11 +156,21 @@
       <p class="location__label" data-reveal data-i18n="location.label">Where?</p>
       <h2 class="location__title" data-reveal data-i18n="location.title">Location</h2>
 
-      <!-- The single source of truth for the venue: the "Get directions" link is
-           built from these lines, so editing them re-aims the map search too. -->
-      <div class="location__address" id="location-address" data-reveal>
-        <p>Grand Celebration Hall</p>
-        <p>11th Avenue, New York State</p>
+      <!--
+        The printed address is translated, but the map is searched with
+        `data-maps-query` — one string, the same in every language. A search
+        typed in Russian or Uzbek finds this place worse than its own name
+        does, and the link would otherwise change meaning with the switcher.
+        Editing the query is what re-aims the map.
+      -->
+      <div
+        class="location__address"
+        id="location-address"
+        data-reveal
+        data-maps-query="Grand Celebration Hall, 11th Avenue, New York State"
+      >
+        <p data-i18n="location.venue">Grand Celebration Hall</p>
+        <p data-i18n="location.street">11th Avenue, New York State</p>
       </div>
 
       <div class="location__venue" data-reveal>

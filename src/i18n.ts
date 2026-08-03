@@ -3,14 +3,15 @@
  * the `data-i18n*` attributes in the markup, so a translation is a dictionary
  * entry rather than a hunt through the sections.
  *
- * What deliberately does NOT move between languages:
+ * Two strings on the page deliberately stay put while everything around them
+ * changes:
  *
- * - The venue and its street. They are the answer to "where do I drive to",
- *   the map search is built from them, and a translated address searches worse
- *   than the printed one.
  * - The RSVP radios' `value`s. Those are what Google Forms records, so they
  *   stay in one language whatever the guest is reading; only the labels beside
  *   them change.
+ * - The map search, which lives in `data-maps-query` on the address rather
+ *   than here. The printed address IS translated, but a query typed in
+ *   Russian or Uzbek finds the place worse than its own name does.
  */
 
 export const LANGS = ['en', 'ru', 'uz'] as const;
@@ -73,6 +74,8 @@ export const translations: Record<Lang, Dictionary> = {
 
     'location.label': 'Where?',
     'location.title': 'Location',
+    'location.venue': 'Grand Celebration Hall',
+    'location.street': '11th Avenue, New York State',
     'location.venueAlt': 'The venue',
     'location.directions': 'Get directions',
     'location.calendar': 'Calendar',
@@ -115,7 +118,7 @@ export const translations: Record<Lang, Dictionary> = {
     'header.sound': 'Включить или выключить музыку',
     'header.language': 'Сменить язык',
 
-    'preloader.click': 'Нажмите',
+    'preloader.click': 'Нажми',
     'preloader.scroll': 'Листайте вниз',
 
     'greeting.label': 'Наш свадебный день',
@@ -141,15 +144,17 @@ export const translations: Record<Lang, Dictionary> = {
 
     'location.label': 'Где?',
     'location.title': 'Место',
+    'location.venue': 'Гранд Селебрейшн Холл',
+    'location.street': '11-я Авеню, штат Нью-Йорк',
     'location.venueAlt': 'Место проведения',
-    'location.directions': 'Построить маршрут',
+    'location.directions': 'Маршрут',
     'location.calendar': 'В календарь',
     'location.event': 'Зохан и Роуз — свадьба',
 
     'dress.label': 'Что надеть',
     'dress.title': 'Дресс-код',
     'dress.rule': 'строгий • black tie',
-    'dress.note1': 'Смокинг или тёмный костюм для мужчин.<br />Длинное или коктейльное платье для женщин.',
+    'dress.note1': 'Мужчинам — смокинг или костюм,<br />женщинам — коктейльное платье.',
     'dress.note2': 'Просим вас не надевать белое. Сияйте вместе с нами!',
     'dress.guestsAlt': 'Гости в вечерних нарядах',
 
@@ -209,6 +214,8 @@ export const translations: Record<Lang, Dictionary> = {
 
     'location.label': 'Qayerda?',
     'location.title': 'Manzil',
+    'location.venue': 'Grand Celebration Hall',
+    'location.street': '11-Avenue, Nyu-York shtati',
     'location.venueAlt': 'To’y joyi',
     'location.directions': 'Yo’l ko’rsatish',
     'location.calendar': 'Kalendarga',
@@ -217,7 +224,7 @@ export const translations: Record<Lang, Dictionary> = {
     'dress.label': 'Nima kiyish kerak',
     'dress.title': 'Dress-kod',
     'dress.rule': 'rasmiy • black tie',
-    'dress.note1': 'Erkaklar uchun smoking yoki to’q rangli kostyum.<br />Ayollar uchun uzun yoki kokteyl libos.',
+    'dress.note1': 'Erkaklarga smoking yoki to’q kostyum,<br />ayollarga kokteyl libos.',
     'dress.note2': 'Oq kiyim kiymaslikni so’raymiz. Biz bilan porlang!',
     'dress.guestsAlt': 'Kechki liboslardagi mehmonlar',
 
