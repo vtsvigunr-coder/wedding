@@ -1,4 +1,11 @@
-import { clamp01, fitScale, headerHeight, onScrollFrame, prefersReducedMotion } from './scroll';
+import {
+  clamp01,
+  fitScale,
+  headerHeight,
+  onScrollFrame,
+  prefersReducedMotion,
+  stableViewportHeight,
+} from './scroll';
 
 /** How long a stop takes to fade in once the lock has reached it. */
 export const STOP_FADE = 0.05;
@@ -77,7 +84,7 @@ export function initTimeline(): void {
   };
 
   const fit = () => {
-    frame.style.setProperty('--fit', String(frameScale(window.innerHeight, headerHeight())));
+    frame.style.setProperty('--fit', String(frameScale(stableViewportHeight(), headerHeight())));
   };
 
   fit();
@@ -93,6 +100,6 @@ export function initTimeline(): void {
 
   onScrollFrame(() => {
     const rect = section.getBoundingClientRect();
-    apply(timelineProgress(rect.top, rect.height, window.innerHeight));
+    apply(timelineProgress(rect.top, rect.height, stableViewportHeight()));
   });
 }

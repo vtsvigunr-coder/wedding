@@ -89,6 +89,18 @@
   --font-script: 'Good Vibes Pro', cursive;
   --font-sans: 'Montserrat', sans-serif;
   --content-max-width: 480px;
+  /*
+   * Good Vibes Pro's swashes overshoot the metrics it declares: at 61px the
+   * face reports a 38px ascent and an 18px descent, but the ink of a word like
+   * "Location" runs 52.5px above the baseline and 19.3px below it. A line box
+   * sized from those metrics therefore ends inside the letters, and anything
+   * that clips to it — iOS Safari does, when it rasterises the text — shears
+   * the tops off. Every script title pads its box out by this much and pulls
+   * the padding straight back with a matching negative offset: the text does
+   * not move a pixel, but the box now contains its own ink. In `em` so it
+   * tracks the title it is used on rather than assuming 61px.
+   */
+  --script-overhang: 0.5em;
   /* What the fixed header covers. Pinned stages scale themselves to fit the
      space below it, so their titles never slide up underneath. */
   --header-height: 72px;

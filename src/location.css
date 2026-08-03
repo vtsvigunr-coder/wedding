@@ -27,9 +27,11 @@
 .location__title {
   position: absolute;
   left: 50%;
-  top: 117px;
+  /* Lifted by the overhang the padding below adds back; see `--script-overhang`. */
+  top: calc(117px - var(--script-overhang));
   transform: translateX(-50%);
   margin: 0;
+  padding-block: var(--script-overhang);
   font-family: var(--font-script);
   font-weight: 400;
   font-size: 61px;

@@ -63,7 +63,11 @@
 }
 
 .final__names {
-  margin: 0;
+  /* The padding is pulled straight back out, so the text keeps its place in the
+     stack and only the box grows; see `--script-overhang`. */
+  margin-block: calc(var(--script-overhang) * -1);
+  margin-inline: 0;
+  padding-block: var(--script-overhang);
   font-family: var(--font-script);
   font-weight: 400;
   font-size: 31px;

@@ -6,7 +6,10 @@
 .bouquet {
   position: relative;
   z-index: 2;
+  /* `svh` to match the stage it rides up over, so the overlap stays put when
+     iOS collapses its URL bar instead of sliding by the bar's height. */
   margin-top: -60vh;
+  margin-top: -60svh;
   height: 467px;
   background: var(--color-accent);
 }
@@ -85,9 +88,11 @@
 .bouquet__title {
   position: absolute;
   left: 50%;
-  top: 237px;
+  /* Lifted by the overhang the padding below adds back; see `--script-overhang`. */
+  top: calc(237px - var(--script-overhang));
   transform: translateX(-50%);
   margin: 0;
+  padding-block: var(--script-overhang);
   font-family: var(--font-script);
   font-weight: 400;
   font-size: 61px;

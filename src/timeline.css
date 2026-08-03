@@ -8,15 +8,19 @@
   position: relative;
   z-index: 2;
   /* Taller than the viewport; the pin sticks for the surplus, and that surplus
-     is the scroll budget the heart's descent is scrubbed across. */
+     is the scroll budget the heart's descent is scrubbed across. `svh` rather
+     than `vh`/`dvh` for the same reason the letter stage uses it: it is the
+     only viewport unit iOS does not move as the URL bar collapses. */
   height: 300vh;
+  height: 300svh;
   background: var(--color-accent);
 }
 
 .timeline__pin {
   position: sticky;
   top: 0;
-  height: 100dvh;
+  height: 100vh;
+  height: 100svh;
   display: grid;
   /* Anchored to the bottom rather than centred: centring pushes the title up
      under the fixed header, which clips its ascenders. */
@@ -44,9 +48,11 @@
 .timeline__title {
   position: absolute;
   left: 50%;
-  top: 50px;
+  /* Lifted by the overhang the padding below adds back; see `--script-overhang`. */
+  top: calc(50px - var(--script-overhang));
   transform: translateX(-50%);
   margin: 0;
+  padding-block: var(--script-overhang);
   font-family: var(--font-script);
   font-weight: 400;
   font-size: 61px;

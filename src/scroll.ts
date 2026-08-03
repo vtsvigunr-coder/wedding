@@ -50,6 +50,31 @@ export function headerHeight(): number {
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
+let probe: HTMLElement | null = null;
+
+/**
+ * The height of the *small* viewport — the one a mobile browser leaves once its
+ * own chrome is showing.
+ *
+ * `window.innerHeight` is not that: on iOS Safari it swells and shrinks by the
+ * height of the URL bar as the page is scrolled, and every resize it fires on
+ * the way rewrites the pinned stages' `--fit`, so the envelope and the
+ * programme visibly grow and snap back mid-scroll. `100svh` is defined to stay
+ * put through exactly that, so the stages are measured against a probe holding
+ * it instead. Falls back to `innerHeight` where `svh` is not understood.
+ */
+export function stableViewportHeight(): number {
+  if (!CSS.supports?.('height', '100svh')) return window.innerHeight;
+  if (!probe?.isConnected) {
+    probe = document.createElement('div');
+    probe.setAttribute('aria-hidden', 'true');
+    probe.style.cssText =
+      'position:fixed;top:0;left:0;width:0;height:100svh;visibility:hidden;pointer-events:none';
+    document.body.append(probe);
+  }
+  return probe.getBoundingClientRect().height || window.innerHeight;
+}
+
 /**
  * How much a stage `designHeight` tall has to shrink to fit a viewport once
  * `reserved` is kept clear at the top. Never scales up: the design's own size

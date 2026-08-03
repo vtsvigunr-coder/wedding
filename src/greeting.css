@@ -1,17 +1,24 @@
 /*
  * The stage is taller than the viewport; the pin sticks for the surplus, and
  * that surplus is the scroll budget the envelope animation is scrubbed across.
+ *
+ * `svh`, not `vh` or `dvh`: on iOS the URL bar collapses as the page is
+ * scrolled, and both of those move with it — the budget would grow while it
+ * was being spent, and the pin would change height under an envelope already
+ * sized to it. `svh` is the one that holds still through the whole scroll.
  */
 .letter-stage {
   position: relative;
   z-index: 1;
   height: 250vh;
+  height: 250svh;
 }
 
 .letter-stage__pin {
   position: sticky;
   top: 0;
-  height: 100dvh;
+  height: 100vh;
+  height: 100svh;
   display: grid;
   place-items: center;
   /* Holds the stage clear of the fixed header. Without it the greeting, being
@@ -69,9 +76,11 @@
 .greeting__title {
   position: absolute;
   left: 50%;
-  top: 117px;
+  /* Lifted by the overhang the padding below adds back; see `--script-overhang`. */
+  top: calc(117px - var(--script-overhang));
   transform: translateX(-50%);
   margin: 0;
+  padding-block: var(--script-overhang);
   font-family: var(--font-script);
   font-weight: 400;
   font-size: 61px;

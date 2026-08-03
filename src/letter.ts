@@ -1,4 +1,11 @@
-import { clamp01, fitScale, headerHeight, onScrollFrame, prefersReducedMotion } from './scroll';
+import {
+  clamp01,
+  fitScale,
+  headerHeight,
+  onScrollFrame,
+  prefersReducedMotion,
+  stableViewportHeight,
+} from './scroll';
 
 export const LETTER_FRAME_COUNT = 60;
 
@@ -107,7 +114,7 @@ export function initLetter(): void {
   const fit = () => {
     greeting?.style.setProperty(
       '--fit',
-      String(fitScale(window.innerHeight, GREETING_HEIGHT, headerHeight())),
+      String(fitScale(stableViewportHeight(), GREETING_HEIGHT, headerHeight())),
     );
   };
 
@@ -122,7 +129,7 @@ export function initLetter(): void {
 
   onScrollFrame(() => {
     const rect = stage.getBoundingClientRect();
-    const progress = stageProgress(rect.top, rect.height, window.innerHeight);
+    const progress = stageProgress(rect.top, rect.height, stableViewportHeight());
     const index = letterFrameIndex(progress, LETTER_FRAME_COUNT);
     if (index !== drawn) draw(index);
   });
