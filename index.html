@@ -64,7 +64,22 @@
     </header>
 
     <section class="preloader" id="preloader">
-      <video class="preloader__video" id="preloader-video" src="/preloader.mp4" muted playsinline preload="auto"></video>
+      <!--
+        The `poster` is the video's own first frame, and it is not a nicety:
+        this screen has no background of its own, so a phone that declines to
+        preload the video (iOS reads `preload="auto"` as `none`) would otherwise
+        show a blank page until the tap. Regenerate it alongside the video with
+        `npm run build:poster`.
+      -->
+      <video
+        class="preloader__video"
+        id="preloader-video"
+        src="/preloader.mp4"
+        poster="/preloader-poster.webp"
+        muted
+        playsinline
+        preload="auto"
+      ></video>
       <div class="preloader__hint" id="preloader-hint">
         <img class="preloader__chevron" src="/icons/Chevron_Up_Duo.svg" alt="" />
         <button class="preloader__click" id="preloader-click" type="button">

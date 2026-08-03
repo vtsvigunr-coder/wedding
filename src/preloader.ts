@@ -40,11 +40,10 @@ export function initPreloader(): void {
     music?.pause();
   };
 
-  const start = () => {
+  const reveal = () => {
     clickButton.classList.remove('preloader__click--waiting');
     hint.classList.add('preloader__hint--gone');
     if (soundToggle) soundToggle.disabled = false;
-    video.play().catch(rewind);
     // Only now, on the visitor's own tap: the track is 1.4 MB and preloading
     // it would have competed with the video for the connection.
     music?.play();
@@ -54,18 +53,28 @@ export function initPreloader(): void {
     phase = nextPreloaderPhase(phase, 'click');
     if (phase !== 'playing') return;
 
-    // Enough of the video buffered to play it through: go straight in.
+    // `play()` goes first, synchronously inside the gesture, and it goes
+    // unconditionally. It is doing two jobs. It is what unlocks media playback
+    // on iOS, which only counts a call made during the tap itself — deferring
+    // it to an event handler spends the gesture. And it is what puts the file
+    // on the wire at all: iOS Safari treats `preload="auto"` as `none`, so the
+    // element can still be sitting at HAVE_NOTHING with networkState IDLE,
+    // fetching nothing. Waiting for `canplay` in that state waits forever —
+    // the download that would fire it is the one this call starts.
+    const started = video.play();
+
     if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
-      start();
-      return;
+      // Already buffered: lift the hint now rather than waiting a frame.
+      reveal();
+    } else {
+      // Otherwise hold the hint on screen, marked as waiting, so the tap
+      // visibly registers while the file arrives, and lift it when the video
+      // actually starts moving.
+      clickButton.classList.add('preloader__click--waiting');
+      video.addEventListener('playing', reveal, { once: true });
     }
 
-    // Otherwise hold the hint on screen, marked as waiting, so the tap visibly
-    // registers rather than appearing to do nothing while the file arrives.
-    // Not `load()` again: that would reset the element and throw away whatever
-    // has already arrived. The fetch is under way — just wait for it.
-    clickButton.classList.add('preloader__click--waiting');
-    video.addEventListener('canplay', start, { once: true });
+    started?.catch(rewind);
   });
 
   video.addEventListener('ended', () => {
