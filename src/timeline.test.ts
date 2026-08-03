@@ -1,28 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import {
+  LOCK_END,
+  LOCK_START,
+  STOP_FADE,
   frameScale,
-  pointAt,
+  lockOffset,
   reachedAt,
-  sampleRoute,
   stopReveal,
   timelineProgress,
-  type Point,
-  type RouteSegment,
 } from './timeline';
-
-/**
- * A straight segment running from y `from` to y `to`. `pointAt` is handed a
- * distance measured from the segment's own drawn start, which is what a real
- * `getPointAtLength` takes — reversing is the caller's job.
- */
-function vertical(from: number, to: number, reversed = false): RouteSegment {
-  const step = to > from ? 1 : -1;
-  return {
-    length: Math.abs(to - from),
-    reversed,
-    pointAt: (distance: number) => ({ x: 0, y: from + step * distance }),
-  };
-}
 
 describe('timelineProgress', () => {
   it('is zero while the stage has yet to pin', () => {
@@ -60,72 +46,52 @@ describe('frameScale', () => {
   });
 });
 
-describe('sampleRoute', () => {
-  it('walks the segments end to end', () => {
-    const samples = sampleRoute([vertical(0, 100), vertical(100, 300)], 3);
-    expect(samples.map((p) => p.y)).toEqual([0, 100, 200, 300]);
+describe('lockOffset', () => {
+  it('leaves the lock parked before the descent begins', () => {
+    expect(lockOffset(0)).toBe(0);
   });
 
-  it('takes a reversed segment back to front', () => {
-    const samples = sampleRoute([vertical(0, 100, true)], 2);
-    expect(samples.map((p) => p.y)).toEqual([100, 50, 0]);
+  it('walks the lock the whole way down by the end', () => {
+    expect(lockOffset(1)).toBeCloseTo(LOCK_END - LOCK_START);
   });
 
-  it('returns nothing for a route with no length', () => {
-    expect(sampleRoute([vertical(0, 0)], 4)).toEqual([]);
-  });
-});
-
-describe('pointAt', () => {
-  const samples: Point[] = [
-    { x: 0, y: 0 },
-    { x: 5, y: 10 },
-    { x: 10, y: 20 },
-  ];
-
-  it('sits at the start of the route at zero', () => {
-    expect(pointAt(samples, 0)).toEqual({ x: 0, y: 0 });
-  });
-
-  it('sits at the end of the route at one', () => {
-    expect(pointAt(samples, 1)).toEqual({ x: 10, y: 20 });
+  it('runs evenly in between, so the line reads as one steady descent', () => {
+    expect(lockOffset(0.5)).toBeCloseTo((LOCK_END - LOCK_START) / 2);
   });
 
   it('clamps progress that runs past either end', () => {
-    expect(pointAt(samples, -3)).toEqual({ x: 0, y: 0 });
-    expect(pointAt(samples, 4)).toEqual({ x: 10, y: 20 });
-  });
-
-  it('has no point to offer for an unsampled route', () => {
-    expect(pointAt([], 0.5)).toBeNull();
+    expect(lockOffset(-3)).toBe(0);
+    expect(lockOffset(4)).toBeCloseTo(LOCK_END - LOCK_START);
   });
 });
 
 describe('reachedAt', () => {
-  const samples = sampleRoute([vertical(0, 100)], 10);
-
-  it('is zero for a height the route starts at', () => {
-    expect(reachedAt(samples, 0)).toBe(0);
+  it('is zero for the height the lock starts at', () => {
+    expect(reachedAt(LOCK_START)).toBe(0);
   });
 
-  it('is the fraction at which the route first descends past the height', () => {
-    expect(reachedAt(samples, 50)).toBeCloseTo(0.5);
+  it('is one for the height it finishes at', () => {
+    expect(reachedAt(LOCK_END)).toBe(1);
   });
 
-  it('resolves a height the route never reaches to the very end', () => {
-    expect(reachedAt(samples, 400)).toBe(1);
+  it('is the fraction of the descent at which the lock draws level', () => {
+    expect(reachedAt((LOCK_START + LOCK_END) / 2)).toBeCloseTo(0.5);
   });
 
-  it('answers on the first crossing, ignoring later ones', () => {
-    const wandering = sampleRoute([vertical(0, 100), vertical(100, 20, true), vertical(20, 200)], 30);
-    // The route dips back up after its first pass through 50, which must not
-    // push the answer to the later crossing.
-    expect(reachedAt(wandering, 50)).toBeLessThan(0.3);
+  it('clamps heights above and below the descent', () => {
+    expect(reachedAt(LOCK_START - 200)).toBe(0);
+    expect(reachedAt(LOCK_END + 200)).toBe(1);
+  });
+
+  it('leaves every dot on the line room to finish fading in', () => {
+    // The last stop is the tight one: its dot sits near the foot of the
+    // descent, and the fade window still has to close before the scrub ends.
+    expect(reachedAt(619) + STOP_FADE).toBeLessThan(1);
   });
 });
 
 describe('stopReveal', () => {
-  it('keeps a stop hidden until the heart draws level with it', () => {
+  it('keeps a stop hidden until the lock draws level with it', () => {
     expect(stopReveal(0.2, 0.4)).toBe(0);
     expect(stopReveal(0.4, 0.4)).toBe(0);
   });

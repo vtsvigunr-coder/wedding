@@ -1,3 +1,25 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="315.874" height="563.423" viewBox="0 0 315.874 563.423" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path id="Line" d="M113.001 110.033C122.346 106.603 146.273 99.2974 170.467 91.602C201.837 81.6237 201.89 53.9496 171.678 40.877L78.2674 0.458885M113.001 110.033C86.3156 119.829 56.5148 133.824 23.0543 117.993C11.2298 112.399 6.13556 95.7232 17.9675 90.1445C37.4162 80.9746 73.3474 94.0661 113.001 110.033ZM113.001 110.033C302.768 233.459 407.767 90.1918 183.767 185.959C183.767 185.959 133.268 198.459 124.268 207.459C115.267 216.459 125.732 239.194 90.7676 247.459C55.8029 255.724 -6.23274 239.459 4.76726 224.459C15.7673 209.459 76.6236 243.312 124.268 278.459C210.934 327.626 308.267 381.959 315.267 326.459C322.267 270.959 -17.7328 412.959 1.26745 364.959C19.8112 318.112 309.767 566.959 299.767 472.459C297.267 449.959 230.767 483.959 160.767 504.459C8.96208 548.916 261.267 522.959 160.767 562.959" stroke="white"/>
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="8" height="580" viewBox="0 0 8 580" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="line">
+<line id="Line 9" x1="4.5" x2="4.5" y2="60" stroke="url(#paint0_linear_0_5)"/>
+<circle id="Ellipse 1974" cx="4" cy="82" r="4" fill="#F6F4F2"/>
+<line id="Line 10" x1="4.5" y1="104" x2="4.5" y2="164" stroke="#F6F4F2"/>
+<circle id="Ellipse 1976" cx="4" cy="186" r="4" fill="#F6F4F2"/>
+<line id="Line 11" x1="4.5" y1="208" x2="4.5" y2="268" stroke="#F6F4F2"/>
+<circle id="Ellipse 1975" cx="4" cy="290" r="4" fill="#F6F4F2"/>
+<line id="Line 13" x1="4.5" y1="312" x2="4.5" y2="372" stroke="#F6F4F2"/>
+<circle id="Ellipse 1977" cx="4" cy="394" r="4" fill="#F6F4F2"/>
+<line id="Line 14" x1="4.5" y1="416" x2="4.5" y2="476" stroke="#F6F4F2"/>
+<circle id="Ellipse 1978" cx="4" cy="498" r="4" fill="#F6F4F2"/>
+<line id="Line 12" x1="4.5" y1="520" x2="4.5" y2="580" stroke="url(#paint1_linear_0_5)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_5" x1="3.5" y1="0" x2="3.5" y2="60" gradientUnits="userSpaceOnUse">
+<stop stop-color="#F6F4F2" stop-opacity="0.1"/>
+<stop offset="1" stop-color="white"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_5" x1="4" y1="467.03" x2="3.5" y2="580" gradientUnits="userSpaceOnUse">
+<stop stop-color="#F6F4F2"/>
+<stop offset="1" stop-color="#F6F4F2" stop-opacity="0.1"/>
+</linearGradient>
+</defs>
 </svg>

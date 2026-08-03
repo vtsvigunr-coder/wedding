@@ -69,36 +69,30 @@
         <div class="timeline__frame" id="timeline-frame">
           <h2 class="timeline__title">Program</h2>
 
-          <div class="timeline__route">
-            <svg class="timeline__line" viewBox="0 0 315.874 563.423" preserveAspectRatio="none" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-              <!-- The line is drawn as three subpaths. The heart travels them in
-                   reading order — the first one backwards, since it is drawn from
-                   the junction up to the line's top end. -->
-              <path class="timeline__segment" data-reverse d="M113.001 110.033C122.346 106.603 146.273 99.2974 170.467 91.602C201.837 81.6237 201.89 53.9496 171.678 40.877L78.2674 0.458885" />
-              <path class="timeline__segment" d="M113.001 110.033C86.3156 119.829 56.5148 133.824 23.0543 117.993C11.2298 112.399 6.13556 95.7232 17.9675 90.1445C37.4162 80.9746 73.3474 94.0661 113.001 110.033Z" />
-              <path class="timeline__segment" d="M113.001 110.033C302.768 233.459 407.767 90.1918 183.767 185.959C183.767 185.959 133.268 198.459 124.268 207.459C115.267 216.459 125.732 239.194 90.7676 247.459C55.8029 255.724 -6.23274 239.459 4.76726 224.459C15.7673 209.459 76.6236 243.312 124.268 278.459C210.934 327.626 308.267 381.959 315.267 326.459C322.267 270.959 -17.7328 412.959 1.26745 364.959C19.8112 318.112 309.767 566.959 299.767 472.459C297.267 449.959 230.767 483.959 160.767 504.459C8.96208 548.916 261.267 522.959 160.767 562.959" />
-            </svg>
-            <img class="timeline__lock" id="timeline-lock" src="/icons/timeline-lock.webp" alt="" />
-          </div>
+          <!-- The line carries its own dots, one per stop; `data-reach` below is
+               each dot's height on the design's canvas, which is what tells a
+               stop when the lock has drawn level with it. -->
+          <img class="timeline__line" src="/icons/timeline-line.svg" alt="" />
+          <img class="timeline__lock" id="timeline-lock" src="/icons/timeline-lock.webp" alt="" />
 
           <ol class="timeline__stops" id="timeline-stops">
-            <li class="timeline__stop timeline__stop--right" style="top: 192px" data-reach="215">
+            <li class="timeline__stop timeline__stop--right" style="top: 162px" data-reach="203">
               <p class="timeline__hour">3 PM</p>
               <p class="timeline__what">Guest arrival</p>
             </li>
-            <li class="timeline__stop timeline__stop--left" style="top: 262px" data-reach="285">
+            <li class="timeline__stop timeline__stop--left" style="top: 265px" data-reach="307">
               <p class="timeline__hour">4 PM</p>
               <p class="timeline__what">Photoshoot</p>
             </li>
-            <li class="timeline__stop timeline__stop--right timeline__stop--wide" style="top: 334px" data-reach="366">
+            <li class="timeline__stop timeline__stop--right timeline__stop--wide" style="top: 351px" data-reach="411">
               <p class="timeline__hour">5 PM</p>
               <p class="timeline__what">The start of<br />the celebration</p>
             </li>
-            <li class="timeline__stop timeline__stop--left" style="top: 404px" data-reach="427">
+            <li class="timeline__stop timeline__stop--left" style="top: 473px" data-reach="515">
               <p class="timeline__hour">6 PM</p>
               <p class="timeline__what">Wedding</p>
             </li>
-            <li class="timeline__stop timeline__stop--right" style="top: 486px" data-reach="518">
+            <li class="timeline__stop timeline__stop--right" style="top: 559px" data-reach="619">
               <p class="timeline__hour">9 PM</p>
               <p class="timeline__what">The End of the Wedding</p>
             </li>
