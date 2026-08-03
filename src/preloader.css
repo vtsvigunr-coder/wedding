@@ -108,21 +108,71 @@
   transition: opacity 0.6s ease;
 }
 
-.preloader__scroll::before {
+/*
+ * A progressive blur. One `backdrop-filter` can only blur by a single radius,
+ * and masking it merely fades a uniformly blurred sheet in and out — which
+ * leaves a seam where the sheet ends, and blurs the flowers just as hard right
+ * under the label as it does at the top edge. Stacking sheets whose radius
+ * doubles, each masked to fade out lower than the one below it, ramps the real
+ * radius: nothing at the top, all six sheets' worth against the bottom edge.
+ */
+/*
+ * Two things this element must not do, both of which silently leave it with
+ * nothing to blur:
+ *
+ * `z-index: -1` — the obvious way to put it behind the label — sends it out of
+ * `.preloader__scroll`, which is positioned but establishes no stacking
+ * context, up to `.preloader`. There it paints beneath the video rather than
+ * over it, so its backdrop is the page and the video hides the result. The
+ * label is lifted over it instead, below.
+ *
+ * A mask, filter or opacity here would make it a backdrop root, and the sheets
+ * inside would then have nothing behind them to blur but each other. Hence the
+ * tint lives on ::after — their sibling, not their ancestor.
+ */
+.preloader__blur {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.preloader__blur::after {
   content: '';
   position: absolute;
   inset: 0;
-  z-index: -1;
-  backdrop-filter: blur(8.5px);
-  -webkit-backdrop-filter: blur(8.5px);
   background: rgba(255, 255, 255, 0.1);
   -webkit-mask-image: linear-gradient(to top, black 45%, transparent 100%);
   mask-image: linear-gradient(to top, black 45%, transparent 100%);
 }
 
+.preloader__blur > div {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(var(--radius));
+  -webkit-backdrop-filter: blur(var(--radius));
+  /* Opaque from the bottom edge up to `--solid`, then gone by `--fade`. The
+     bands overlap, which is what keeps the ramp free of banding. */
+  -webkit-mask-image: linear-gradient(to top, black var(--solid), transparent var(--fade));
+  mask-image: linear-gradient(to top, black var(--solid), transparent var(--fade));
+}
+
+.preloader__blur > div:nth-child(1) { --radius: 0.25px; --solid: 60%; --fade: 100%; }
+.preloader__blur > div:nth-child(2) { --radius: 0.5px; --solid: 48%; --fade: 84%; }
+.preloader__blur > div:nth-child(3) { --radius: 1px; --solid: 36%; --fade: 68%; }
+.preloader__blur > div:nth-child(4) { --radius: 2px; --solid: 24%; --fade: 52%; }
+.preloader__blur > div:nth-child(5) { --radius: 4px; --solid: 12%; --fade: 36%; }
+.preloader__blur > div:nth-child(6) { --radius: 8px; --solid: 0%; --fade: 20%; }
+
 .preloader--finished .preloader__scroll {
   opacity: 1;
   pointer-events: auto;
+}
+
+/* Lifted over the blur, which is positioned and would otherwise paint on top. */
+.preloader__scroll p,
+.preloader__scroll img {
+  position: relative;
+  z-index: 1;
 }
 
 .preloader__scroll p {

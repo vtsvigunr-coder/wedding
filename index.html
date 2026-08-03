@@ -32,6 +32,12 @@
         </button>
       </div>
       <div class="preloader__scroll" id="preloader-scroll">
+        <!-- Six stacked sheets, each blurring harder than the one above it, so
+             the hero dissolves into the label instead of meeting it at a seam.
+             Presentational only — the stylesheet gives each sheet its radius. -->
+        <div class="preloader__blur" aria-hidden="true">
+          <div></div><div></div><div></div><div></div><div></div><div></div>
+        </div>
         <p>Scroll down</p>
         <img src="/icons/Arrows.svg" alt="" />
       </div>
