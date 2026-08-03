@@ -38,6 +38,29 @@ export function prefersReducedMotion(): boolean {
   return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 }
 
+/**
+ * What the fixed header covers, read from the stylesheet so the two never
+ * drift apart. Pinned stages shrink to fit the space below it — without that
+ * their titles ride up under the header on short screens, and the script
+ * face's ascenders, which already overhang their line box, get clipped.
+ */
+export function headerHeight(): number {
+  const declared = getComputedStyle(document.documentElement).getPropertyValue('--header-height');
+  const parsed = Number.parseFloat(declared);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+/**
+ * How much a stage `designHeight` tall has to shrink to fit a viewport once
+ * `reserved` is kept clear at the top. Never scales up: the design's own size
+ * is the ceiling.
+ */
+export function fitScale(viewportHeight: number, designHeight: number, reserved = 0): number {
+  if (!(viewportHeight > 0) || !(designHeight > 0)) return 1;
+  const room = Math.max(0, viewportHeight - reserved);
+  return Math.min(1, room / designHeight);
+}
+
 export function clamp01(value: number): number {
   // `value > 0` rather than `value >= 0` so a negative zero — which -top
   // produces the moment a stage pins — normalises to plain zero.

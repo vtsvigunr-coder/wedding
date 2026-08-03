@@ -1,4 +1,4 @@
-import { clamp01, onScrollFrame, prefersReducedMotion } from './scroll';
+import { clamp01, fitScale, headerHeight, onScrollFrame, prefersReducedMotion } from './scroll';
 
 /** How long a stop takes to fade in once the lock has reached it. */
 export const STOP_FADE = 0.05;
@@ -26,10 +26,14 @@ export function timelineProgress(top: number, height: number, viewportHeight: nu
   return clamp01(-top / travel);
 }
 
-/** How much the frame has to shrink to fit a viewport shorter than the design. */
-export function frameScale(viewportHeight: number): number {
-  if (!(viewportHeight > 0)) return 1;
-  return Math.min(1, viewportHeight / FRAME_HEIGHT);
+/**
+ * How much the frame has to shrink to fit a viewport shorter than the design,
+ * with `reserved` — the header — kept clear at the top. The frame is anchored
+ * to the bottom of the pin, so shrinking it by exactly the header's height is
+ * what lands its top edge just below the header rather than behind it.
+ */
+export function frameScale(viewportHeight: number, reserved = 0): number {
+  return fitScale(viewportHeight, FRAME_HEIGHT, reserved);
 }
 
 /** How far the lock has travelled from its resting place, in canvas pixels. */
@@ -73,7 +77,7 @@ export function initTimeline(): void {
   };
 
   const fit = () => {
-    frame.style.setProperty('--fit', String(frameScale(window.innerHeight)));
+    frame.style.setProperty('--fit', String(frameScale(window.innerHeight, headerHeight())));
   };
 
   fit();

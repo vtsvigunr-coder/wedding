@@ -1,50 +1,69 @@
+/*
+ * The two faces the page actually renders in are served as woff2 — the same
+ * outlines, brotli-compressed, which takes them from 385 KB to 102 KB on the
+ * critical path. The original files stay as a fallback for anything that
+ * cannot read woff2. `swap` throughout: the text is on screen in a fallback
+ * face from the first paint rather than invisible until the download lands.
+ */
 @font-face {
   font-family: 'LT Remark';
-  src: url('/fonts/LTRemark-Regular.otf') format('opentype');
+  src:
+    url('/fonts/LTRemark-Regular.woff2') format('woff2'),
+    url('/fonts/LTRemark-Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: 'LT Remark';
   src: url('/fonts/LTRemark-Bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: 'LT Remark';
   src: url('/fonts/LTRemark-Italic.otf') format('opentype');
   font-weight: 400;
   font-style: italic;
+  font-display: swap;
 }
 @font-face {
   font-family: 'LT Remark';
   src: url('/fonts/LTRemark-BoldItalic.otf') format('opentype');
   font-weight: 700;
   font-style: italic;
+  font-display: swap;
 }
 @font-face {
   font-family: 'LT Remark';
   src: url('/fonts/LTRemark-Black.otf') format('opentype');
   font-weight: 900;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: 'LT Remark';
   src: url('/fonts/LTRemark-BlackItalic.otf') format('opentype');
   font-weight: 900;
   font-style: italic;
+  font-display: swap;
 }
 @font-face {
   font-family: 'Good Vibes Pro';
-  src: url('/fonts/GoodVibesPro-Regular.ttf') format('truetype');
+  src:
+    url('/fonts/GoodVibesPro-Regular.woff2') format('woff2'),
+    url('/fonts/GoodVibesPro-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: 'Montserrat';
   src: url('/fonts/Montserrat-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 :root {
   --color-background: #f6f4f2;
@@ -55,6 +74,20 @@
   --font-script: 'Good Vibes Pro', cursive;
   --font-sans: 'Montserrat', sans-serif;
   --content-max-width: 480px;
+  /* What the fixed header covers. Pinned stages scale themselves to fit the
+     space below it, so their titles never slide up underneath. */
+  --header-height: 72px;
+}
+
+/*
+ * For the footer's arrow back to the top. Kept behind the motion query: a
+ * visitor who asked for less motion gets the jump instead of a long glide
+ * through every scrubbed section on the way up.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 * {

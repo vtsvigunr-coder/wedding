@@ -18,8 +18,31 @@
   color: #452d2d;
 }
 
-.site-footer__ornament {
+/* The ornament is an arrow, so it does the job of one: back up to the hero. */
+.site-footer__up {
   flex: none;
+  display: flex;
+  padding: 8px;
+  margin: -8px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.site-footer__up:hover {
+  opacity: 0.7;
+}
+
+.site-footer__up:active {
+  transform: translateY(-2px);
+}
+
+.site-footer__ornament {
+  display: block;
   width: 14px;
   height: 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-footer__up {
+    transition: none;
+  }
 }

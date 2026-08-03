@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  FRAME_HEIGHT,
   LOCK_END,
   LOCK_START,
   STOP_FADE,
@@ -43,6 +44,14 @@ describe('frameScale', () => {
 
   it('falls back to full size before the viewport has been measured', () => {
     expect(frameScale(0)).toBe(1);
+  });
+
+  it('shrinks by the header it is asked to keep clear', () => {
+    // Bottom-anchored, so a frame this much shorter starts exactly below it.
+    expect(frameScale(FRAME_HEIGHT + 72, 72)).toBeCloseTo(1);
+    expect(frameScale(FRAME_HEIGHT / 2 + 72, 72)).toBeCloseTo(0.5);
+    // The same viewport without the reserve would not have shrunk at all.
+    expect(frameScale(FRAME_HEIGHT + 72)).toBe(1);
   });
 });
 

@@ -1,6 +1,9 @@
-import { clamp01, onScrollFrame, prefersReducedMotion } from './scroll';
+import { clamp01, fitScale, headerHeight, onScrollFrame, prefersReducedMotion } from './scroll';
 
 export const LETTER_FRAME_COUNT = 60;
+
+/** The design's canvas for the greeting; it shrinks to fit shorter screens. */
+export const GREETING_HEIGHT = 720;
 
 /**
  * How far the pinned stage has been scrolled through, 0 to 1. The stage is
@@ -91,13 +94,25 @@ export function initLetter(): void {
   };
 
   if (prefersReducedMotion()) {
-    // Only the open envelope is ever shown, so the rest of the sequence is
-    // never fetched.
+    // The stage is unpinned and flows at its own height, so there is nothing to
+    // fit; only the open envelope is ever shown, and the rest of the sequence
+    // is never fetched.
     const last = LETTER_FRAME_COUNT - 1;
     frames[last] = createFrame(last);
     drawWhenReady(last);
     return;
   }
+
+  const greeting = document.getElementById('greeting');
+  const fit = () => {
+    greeting?.style.setProperty(
+      '--fit',
+      String(fitScale(window.innerHeight, GREETING_HEIGHT, headerHeight())),
+    );
+  };
+
+  fit();
+  window.addEventListener('resize', fit, { passive: true });
 
   // The closed envelope is fetched right away so it is on screen the moment the
   // preloader lifts; the rest follows once the preloader video is under way.

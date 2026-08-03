@@ -62,7 +62,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .preloader__chevron {
+  .preloader__chevron,
+  .preloader__scroll img,
+  .preloader__click--waiting {
     animation: none;
   }
 }
@@ -82,6 +84,23 @@
   color: #fff;
   font-size: 16px;
   z-index: 1;
+}
+
+/* The tap landed but the video has not finished arriving. Pulsing says the
+   button heard it, without swapping in a spinner the design has no room for. */
+.preloader__click--waiting {
+  animation: click-waiting 1.2s ease-in-out infinite;
+  cursor: progress;
+}
+
+@keyframes click-waiting {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
 }
 
 .preloader__click-ring {
@@ -181,6 +200,19 @@
   line-height: 18px;
 }
 
+/* Bobbing downwards, the way the hint's chevron bobs up, so the two ends of
+   the hero nudge in the direction each of them is asking the visitor to go. */
 .preloader__scroll img {
   width: 14px;
+  animation: scroll-arrow-bob 1.6s ease-in-out infinite;
+}
+
+@keyframes scroll-arrow-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
 }

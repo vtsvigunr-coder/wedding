@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
     <title>Zohan &amp; Rose — Invitation</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>" />
+
+    <!-- The two faces the first screen is set in. Without these the browser
+         only discovers them after the stylesheet parses, which costs a round
+         trip on exactly the screen the visitor is waiting on. -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/LTRemark-Regular.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/GoodVibesPro-Regular.woff2" crossorigin />
   </head>
   <body>
     <header class="site-header" id="site-header">
@@ -49,15 +55,15 @@
           <p class="greeting__label">Our wedding day</p>
           <h2 class="greeting__title">Dear guest !</h2>
           <canvas class="greeting__envelope" id="letter-canvas" role="img" aria-label="An envelope opening to reveal the invitation"></canvas>
-          <img class="greeting__divider" src="/icons/divider.png" alt="" />
+          <img class="greeting__divider" src="/icons/divider.png" alt="" loading="lazy" decoding="async" />
         </section>
       </div>
     </div>
 
     <section class="bouquet" id="bouquet">
-      <img class="bouquet__paper" src="/icons/bouquet-paper.webp" alt="" />
+      <img class="bouquet__paper" src="/icons/bouquet-paper.webp" alt="" loading="lazy" decoding="async" />
       <div class="bouquet__flowers" id="bouquet-flowers">
-        <img class="bouquet__flowers-image" src="/icons/bouquet.webp" alt="" />
+        <img class="bouquet__flowers-image" src="/icons/bouquet.webp" alt="" loading="lazy" decoding="async" />
       </div>
       <div class="bouquet__date" id="bouquet-date">
         <p class="bouquet__label">Wedding date</p>
@@ -78,8 +84,8 @@
           <!-- The line carries its own dots, one per stop; `data-reach` below is
                each dot's height on the design's canvas, which is what tells a
                stop when the lock has drawn level with it. -->
-          <img class="timeline__line" src="/icons/timeline-line.svg" alt="" />
-          <img class="timeline__lock" id="timeline-lock" src="/icons/timeline-lock.webp" alt="" />
+          <img class="timeline__line" src="/icons/timeline-line.svg" alt="" loading="lazy" decoding="async" />
+          <img class="timeline__lock" id="timeline-lock" src="/icons/timeline-lock.webp" alt="" loading="lazy" decoding="async" />
 
           <ol class="timeline__stops" id="timeline-stops">
             <li class="timeline__stop timeline__stop--right" style="top: 162px" data-reach="203">
@@ -105,7 +111,7 @@
           </ol>
 
           <div class="timeline__car">
-            <img src="/icons/timeline-car.webp" alt="" />
+            <img src="/icons/timeline-car.webp" alt="" loading="lazy" decoding="async" />
           </div>
         </div>
       </div>
@@ -123,7 +129,7 @@
       </div>
 
       <div class="location__venue" data-reveal>
-        <img src="/icons/location-venue.webp" alt="The venue" />
+        <img src="/icons/location-venue.webp" alt="The venue" loading="lazy" decoding="async" />
       </div>
 
       <div class="location__actions" data-reveal>
@@ -134,7 +140,7 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src="/icons/location-pin.svg" alt="" />
+          <img src="/icons/location-pin.svg" alt="" loading="lazy" decoding="async" />
           <span>Get directions</span>
         </a>
 
@@ -146,19 +152,19 @@
           data-start="2026-09-26T16:00"
           data-end="2026-09-26T21:00"
         >
-          <img src="/icons/location-calendar.svg" alt="" />
+          <img src="/icons/location-calendar.svg" alt="" loading="lazy" decoding="async" />
           <span>Calendar</span>
         </button>
       </div>
 
-      <img class="location__divider" src="/icons/divider.png" alt="" data-reveal />
+      <img class="location__divider" src="/icons/divider.png" alt="" data-reveal loading="lazy" decoding="async" />
     </section>
 
     <section class="dress-code" id="dress-code" data-reveal-group>
       <p class="dress-code__label" data-reveal>What to wear</p>
       <h2 class="dress-code__title" data-reveal>Dress code</h2>
 
-      <img class="dress-code__guests" src="/icons/dress-code.webp" alt="Guests in formal evening wear" data-reveal />
+      <img class="dress-code__guests" src="/icons/dress-code.webp" alt="Guests in formal evening wear" data-reveal loading="lazy" decoding="async" />
 
       <div class="dress-code__text" data-reveal>
         <p class="dress-code__rule">formal • black tie</p>
@@ -221,8 +227,8 @@
     </section>
 
     <section class="final" id="final">
-      <img class="final__paper final__paper--buds" src="/icons/final-buds.webp" alt="" />
-      <img class="final__paper final__paper--flowers" src="/icons/final-bloom.webp" alt="A sheet of paper framed by flowers" />
+      <img class="final__paper final__paper--buds" src="/icons/final-buds.webp" alt="" loading="lazy" decoding="async" />
+      <img class="final__paper final__paper--flowers" src="/icons/final-bloom.webp" alt="A sheet of paper framed by flowers" loading="lazy" decoding="async" />
       <div class="final__text">
         <p class="final__wish">We would be happy to share<br />this day together.</p>
         <p class="final__names">Zohan &amp; Rose</p>
@@ -231,10 +237,15 @@
 
     <footer class="site-footer" data-reveal-group>
       <p class="site-footer__title" data-reveal>Wedding Day</p>
-      <img class="site-footer__ornament" src="/icons/footer-ornament.svg" alt="" data-reveal />
+      <a class="site-footer__up" href="#preloader" aria-label="Back to the top" data-reveal>
+        <img class="site-footer__ornament" src="/icons/footer-ornament.svg" alt="" loading="lazy" decoding="async" />
+      </a>
     </footer>
 
-    <audio id="bg-music" src="/music/wedding-music.mp3" loop preload="auto"></audio>
+    <!-- `none`, not `auto`: the track is 1.4 MB and nothing plays it until the
+         visitor taps Click, so preloading it only starves the preloader video
+         of bandwidth on the one screen that is actually on show. -->
+    <audio id="bg-music" src="/music/wedding-music.mp3" loop preload="none"></audio>
 
     <script type="module" src="/src/main.ts"></script>
   </body>
