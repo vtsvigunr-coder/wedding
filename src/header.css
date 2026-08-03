@@ -23,14 +23,107 @@
 
 .site-header__title {
   margin: 0;
-  font-size: 18px;
+  font-size: 20px;
+  line-height: 24px;
   font-family: var(--font-remark);
   color: #000;
 }
 
+/*
+ * The design puts the sound button and the language switcher together at the
+ * right-hand end, with the title holding the left.
+ */
+.site-header__tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .site-header__sound {
+  flex: none;
   width: 24px;
   height: 24px;
+}
+
+.lang {
+  position: relative;
+  flex: none;
+}
+
+.lang__button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-remark);
+  font-size: 14px;
+  line-height: 18px;
+  color: #000;
+}
+
+.lang__globe {
+  width: 16px;
+  height: 16px;
+}
+
+.lang__chevron {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.2s ease;
+}
+
+.lang--open .lang__chevron {
+  transform: rotate(180deg);
+}
+
+/*
+ * Hidden by clipping rather than `display`, so opening it is a transition and
+ * not a jump. It sits under the button, right-aligned with it.
+ */
+.lang__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 1;
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  min-width: 64px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(8.5px);
+  -webkit-backdrop-filter: blur(8.5px);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(69, 45, 45, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.lang--open .lang__menu {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.lang__option {
+  width: 100%;
+  padding: 6px 16px;
+  text-align: left;
+  font-family: var(--font-remark);
+  font-size: 14px;
+  line-height: 18px;
+  color: #000;
+}
+
+.lang__option[aria-selected='true'] {
+  color: var(--color-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lang__chevron,
+  .lang__menu {
+    transition: none;
+  }
 }
 
 .site-header__sound--playing .site-header__sound-wave {

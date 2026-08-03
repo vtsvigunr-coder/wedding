@@ -31,8 +31,9 @@
   </head>
   <body>
     <header class="site-header" id="site-header">
-      <p class="site-header__title">Invitation</p>
-      <button class="site-header__sound" id="sound-toggle" type="button" aria-label="Toggle music" aria-pressed="true" disabled>
+      <p class="site-header__title" data-i18n="header.title">Invitation</p>
+      <div class="site-header__tools">
+        <button class="site-header__sound" id="sound-toggle" type="button" aria-label="Toggle music" data-i18n-attr="aria-label:header.sound" aria-pressed="true" disabled>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="0.25" y="0.25" width="23.5" height="23.5" rx="11.75" stroke="black" stroke-width="0.5"/>
           <clipPath id="sound-wave-clip">
@@ -42,7 +43,21 @@
             <path class="site-header__sound-wave" d="M7,12 C7.625,10.7 8.875,10.7 9.5,12 C10.125,13.3 11.375,13.3 12,12 C12.625,10.7 13.875,10.7 14.5,12 C15.125,13.3 16.375,13.3 17,12 C17.625,10.7 18.875,10.7 19.5,12 C20.125,13.3 21.375,13.3 22,12" stroke="black" stroke-width="0.5" stroke-linecap="round" fill="none"/>
           </g>
         </svg>
-      </button>
+        </button>
+
+        <div class="lang" id="lang">
+          <button class="lang__button" id="lang-button" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Change language" data-i18n-attr="aria-label:header.language">
+            <img class="lang__globe" src="/icons/globe.svg" alt="" />
+            <span class="lang__code" id="lang-code">EN</span>
+            <img class="lang__chevron" src="/icons/chevron-down.svg" alt="" />
+          </button>
+          <ul class="lang__menu" id="lang-menu" role="listbox">
+            <li><button class="lang__option" type="button" role="option" aria-selected="true" data-lang="en">EN</button></li>
+            <li><button class="lang__option" type="button" role="option" aria-selected="false" data-lang="ru">РУ</button></li>
+            <li><button class="lang__option" type="button" role="option" aria-selected="false" data-lang="uz">UZ</button></li>
+          </ul>
+        </div>
+      </div>
     </header>
 
     <section class="preloader" id="preloader">
@@ -50,7 +65,7 @@
       <div class="preloader__hint" id="preloader-hint">
         <img class="preloader__chevron" src="/icons/Chevron_Up_Duo.svg" alt="" />
         <button class="preloader__click" id="preloader-click" type="button">
-          <span>Click</span>
+          <span data-i18n="preloader.click">Click</span>
           <img class="preloader__click-ring" src="/icons/click-ring.svg" alt="" />
         </button>
       </div>
@@ -61,7 +76,7 @@
         <div class="preloader__blur" aria-hidden="true">
           <div></div><div></div><div></div><div></div><div></div><div></div>
         </div>
-        <p>Scroll down</p>
+        <p data-i18n="preloader.scroll">Scroll down</p>
         <img src="/icons/Arrows.svg" alt="" />
       </div>
     </section>
@@ -69,9 +84,9 @@
     <div class="letter-stage" id="letter-stage">
       <div class="letter-stage__pin">
         <section class="greeting" id="greeting">
-          <p class="greeting__label">Our wedding day</p>
-          <h2 class="greeting__title">Dear guest !</h2>
-          <canvas class="greeting__envelope" id="letter-canvas" role="img" aria-label="An envelope opening to reveal the invitation"></canvas>
+          <p class="greeting__label" data-i18n="greeting.label">Our wedding day</p>
+          <h2 class="greeting__title" data-i18n="greeting.title">Dear guest !</h2>
+          <canvas class="greeting__envelope" id="letter-canvas" role="img" aria-label="An envelope opening to reveal the invitation" data-i18n-attr="aria-label:greeting.envelope"></canvas>
           <img class="greeting__divider" src="/icons/divider.png" alt="" loading="lazy" decoding="async" />
         </section>
       </div>
@@ -83,12 +98,12 @@
         <img class="bouquet__flowers-image" src="/icons/bouquet.webp" alt="" loading="lazy" decoding="async" />
       </div>
       <div class="bouquet__date" id="bouquet-date">
-        <p class="bouquet__label">Wedding date</p>
-        <h2 class="bouquet__title">When?</h2>
+        <p class="bouquet__label" data-i18n="bouquet.label">Wedding date</p>
+        <h2 class="bouquet__title" data-i18n="bouquet.title">When?</h2>
         <div class="bouquet__when">
-          <span class="bouquet__when-part">September</span>
+          <span class="bouquet__when-part" data-i18n="bouquet.month">September</span>
           <span class="bouquet__when-day">26</span>
-          <span class="bouquet__when-part bouquet__when-part--time">16:00</span>
+          <span class="bouquet__when-part bouquet__when-part--time" data-i18n="bouquet.time">16:00</span>
         </div>
       </div>
     </section>
@@ -96,7 +111,7 @@
     <section class="timeline" id="timeline">
       <div class="timeline__pin">
         <div class="timeline__frame" id="timeline-frame">
-          <h2 class="timeline__title">Program</h2>
+          <h2 class="timeline__title" data-i18n="timeline.title">Program</h2>
 
           <!-- The line carries its own dots, one per stop; `data-reach` below is
                each dot's height on the design's canvas, which is what tells a
@@ -106,24 +121,24 @@
 
           <ol class="timeline__stops" id="timeline-stops">
             <li class="timeline__stop timeline__stop--right" style="top: 162px" data-reach="203">
-              <p class="timeline__hour">3 PM</p>
-              <p class="timeline__what">Guest arrival</p>
+              <p class="timeline__hour" data-i18n="timeline.1.hour">3 PM</p>
+              <p class="timeline__what" data-i18n="timeline.1.what">Guest arrival</p>
             </li>
             <li class="timeline__stop timeline__stop--left" style="top: 265px" data-reach="307">
-              <p class="timeline__hour">4 PM</p>
-              <p class="timeline__what">Photoshoot</p>
+              <p class="timeline__hour" data-i18n="timeline.2.hour">4 PM</p>
+              <p class="timeline__what" data-i18n="timeline.2.what">Photoshoot</p>
             </li>
             <li class="timeline__stop timeline__stop--right timeline__stop--wide" style="top: 351px" data-reach="411">
-              <p class="timeline__hour">5 PM</p>
-              <p class="timeline__what">The start of<br />the celebration</p>
+              <p class="timeline__hour" data-i18n="timeline.3.hour">5 PM</p>
+              <p class="timeline__what" data-i18n-html="timeline.3.what">The start of<br />the celebration</p>
             </li>
             <li class="timeline__stop timeline__stop--left" style="top: 473px" data-reach="515">
-              <p class="timeline__hour">6 PM</p>
-              <p class="timeline__what">Wedding</p>
+              <p class="timeline__hour" data-i18n="timeline.4.hour">6 PM</p>
+              <p class="timeline__what" data-i18n="timeline.4.what">Wedding</p>
             </li>
             <li class="timeline__stop timeline__stop--right" style="top: 559px" data-reach="619">
-              <p class="timeline__hour">9 PM</p>
-              <p class="timeline__what">The End of the Wedding</p>
+              <p class="timeline__hour" data-i18n="timeline.5.hour">9 PM</p>
+              <p class="timeline__what" data-i18n="timeline.5.what">The End of the Wedding</p>
             </li>
           </ol>
 
@@ -135,8 +150,8 @@
     </section>
 
     <section class="location" id="location" data-reveal-group>
-      <p class="location__label" data-reveal>Where?</p>
-      <h2 class="location__title" data-reveal>Location</h2>
+      <p class="location__label" data-reveal data-i18n="location.label">Where?</p>
+      <h2 class="location__title" data-reveal data-i18n="location.title">Location</h2>
 
       <!-- The single source of truth for the venue: the "Get directions" link is
            built from these lines, so editing them re-aims the map search too. -->
@@ -146,7 +161,7 @@
       </div>
 
       <div class="location__venue" data-reveal>
-        <img src="/icons/location-venue.webp" alt="The venue" loading="lazy" decoding="async" />
+        <img src="/icons/location-venue.webp" alt="The venue" data-i18n-attr="alt:location.venueAlt" loading="lazy" decoding="async" />
       </div>
 
       <div class="location__actions" data-reveal>
@@ -158,19 +173,19 @@
           rel="noopener noreferrer"
         >
           <img src="/icons/location-pin.svg" alt="" loading="lazy" decoding="async" />
-          <span>Get directions</span>
+          <span data-i18n="location.directions">Get directions</span>
         </a>
 
         <button
           class="location__button"
           id="location-calendar"
           type="button"
-          data-title="Zohan &amp; Rose — Wedding"
+          data-title="Zohan &amp; Rose — Wedding" data-i18n-attr="data-title:location.event"
           data-start="2026-09-26T16:00"
           data-end="2026-09-26T21:00"
         >
           <img src="/icons/location-calendar.svg" alt="" loading="lazy" decoding="async" />
-          <span>Calendar</span>
+          <span data-i18n="location.calendar">Calendar</span>
         </button>
       </div>
 
@@ -178,24 +193,24 @@
     </section>
 
     <section class="dress-code" id="dress-code" data-reveal-group>
-      <p class="dress-code__label" data-reveal>What to wear</p>
-      <h2 class="dress-code__title" data-reveal>Dress code</h2>
+      <p class="dress-code__label" data-reveal data-i18n="dress.label">What to wear</p>
+      <h2 class="dress-code__title" data-reveal data-i18n="dress.title">Dress code</h2>
 
-      <img class="dress-code__guests" src="/icons/dress-code.webp" alt="Guests in formal evening wear" data-reveal loading="lazy" decoding="async" />
+      <img class="dress-code__guests" src="/icons/dress-code.webp" alt="Guests in formal evening wear" data-i18n-attr="alt:dress.guestsAlt" data-reveal loading="lazy" decoding="async" />
 
       <div class="dress-code__text" data-reveal>
-        <p class="dress-code__rule">formal • black tie</p>
+        <p class="dress-code__rule" data-i18n="dress.rule">formal • black tie</p>
         <div class="dress-code__notes">
-          <p>Tuxedo or dark suit for gentlemen. Long or<br />cocktail dress for ladies.</p>
-          <p>We kindly ask you to avoid wearing white. Shine with us!</p>
+          <p data-i18n-html="dress.note1">Tuxedo or dark suit for gentlemen. Long or<br />cocktail dress for ladies.</p>
+          <p data-i18n="dress.note2">We kindly ask you to avoid wearing white. Shine with us!</p>
         </div>
       </div>
     </section>
 
     <section class="rsvp" id="rsvp" data-reveal-group>
       <div class="rsvp__intro" data-reveal>
-        <h2 class="rsvp__title">Confirm your attendance</h2>
-        <p class="rsvp__lead">Please let us know<br />if you can come.</p>
+        <h2 class="rsvp__title" data-i18n="rsvp.title">Confirm your attendance</h2>
+        <p class="rsvp__lead" data-i18n-html="rsvp.lead">Please let us know<br />if you can come.</p>
       </div>
 
       <!--
@@ -215,30 +230,30 @@
         novalidate
       >
         <fieldset class="rsvp__group">
-          <p class="rsvp__label">Will you be able to come?</p>
+          <p class="rsvp__label" data-i18n="rsvp.question">Will you be able to come?</p>
           <div class="rsvp__choices">
             <label class="rsvp__choice">
               <input class="rsvp__radio" type="radio" name="entry.1000001" value="Yes, with pleasure!" />
-              <span>Yes, with pleasure!</span>
+              <span data-i18n="rsvp.yes">Yes, with pleasure!</span>
             </label>
             <label class="rsvp__choice">
               <input class="rsvp__radio" type="radio" name="entry.1000001" value="Unfortunately, I can't." />
-              <span>Unfortunately, I can't.</span>
+              <span data-i18n="rsvp.no">Unfortunately, I can't.</span>
             </label>
           </div>
         </fieldset>
 
         <div class="rsvp__group rsvp__group--name">
-          <label class="rsvp__label" for="rsvp-name">Your first and last name</label>
-          <input class="rsvp__field" id="rsvp-name" type="text" name="entry.1000002" autocomplete="name" placeholder="Alexei" />
+          <label class="rsvp__label" for="rsvp-name" data-i18n="rsvp.name">Your first and last name</label>
+          <input class="rsvp__field" id="rsvp-name" type="text" name="entry.1000002" autocomplete="name" placeholder="Alexei" data-i18n-attr="placeholder:rsvp.namePlaceholder" />
         </div>
 
         <div class="rsvp__group">
-          <label class="rsvp__label" for="rsvp-message">Message (optional)</label>
+          <label class="rsvp__label" for="rsvp-message" data-i18n="rsvp.message">Message (optional)</label>
           <textarea class="rsvp__field rsvp__field--message" id="rsvp-message" name="entry.1000003" rows="3"></textarea>
         </div>
 
-        <button class="rsvp__send" id="rsvp-send" type="submit">Send</button>
+        <button class="rsvp__send" id="rsvp-send" type="submit" data-i18n="rsvp.send">Send</button>
         <p class="rsvp__status" id="rsvp-status" role="status" aria-live="polite"></p>
       </form>
     </section>
@@ -247,14 +262,14 @@
       <img class="final__paper final__paper--buds" src="/icons/final-buds.webp" alt="" loading="lazy" decoding="async" />
       <img class="final__paper final__paper--flowers" src="/icons/final-bloom.webp" alt="A sheet of paper framed by flowers" loading="lazy" decoding="async" />
       <div class="final__text">
-        <p class="final__wish">We would be happy to share<br />this day together.</p>
-        <p class="final__names">Zohan &amp; Rose</p>
+        <p class="final__wish" data-i18n-html="final.wish">We would be happy to share<br />this day together.</p>
+        <p class="final__names" data-i18n="final.names">Zohan &amp; Rose</p>
       </div>
     </section>
 
     <footer class="site-footer" data-reveal-group>
-      <p class="site-footer__title" data-reveal>Wedding Day</p>
-      <a class="site-footer__up" href="#preloader" aria-label="Back to the top" data-reveal>
+      <p class="site-footer__title" data-reveal data-i18n="footer.title">Wedding Day</p>
+      <a class="site-footer__up" href="#preloader" aria-label="Back to the top" data-i18n-attr="aria-label:footer.up" data-reveal>
         <img class="site-footer__ornament" src="/icons/footer-ornament.svg" alt="" loading="lazy" decoding="async" />
       </a>
     </footer>

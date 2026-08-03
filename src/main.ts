@@ -10,6 +10,7 @@ import './rsvp.css';
 import './final.css';
 import './footer.css';
 import './reveal.css';
+import { initI18n } from './i18n';
 import { initHeader } from './header';
 import { initSoundToggle } from './audio';
 import { initPreloader } from './preloader';
@@ -21,6 +22,7 @@ import { initRsvp } from './rsvp';
 import { initFinal } from './final';
 import { initReveals } from './reveal';
 
+initI18n();
 initHeader();
 initSoundToggle();
 initPreloader();

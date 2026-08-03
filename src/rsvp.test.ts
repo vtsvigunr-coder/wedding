@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { translations } from './i18n';
 import { encodeFields, isConfigured, readFields, validate } from './rsvp';
 
 const names = { attendance: 'entry.1', guest: 'entry.2' };
@@ -38,12 +39,19 @@ describe('validate', () => {
   });
 
   it('asks for an answer before a name', () => {
-    expect(validate({ 'entry.2': 'Alexei' }, names)).toMatch(/whether you can come/);
+    expect(validate({ 'entry.2': 'Alexei' }, names)).toBe('rsvp.needAnswer');
   });
 
   it('asks for a name that is missing or only spaces', () => {
-    expect(validate({ 'entry.1': 'no' }, names)).toMatch(/your name/);
-    expect(validate({ 'entry.1': 'no', 'entry.2': '   ' }, names)).toMatch(/your name/);
+    expect(validate({ 'entry.1': 'no' }, names)).toBe('rsvp.needName');
+    expect(validate({ 'entry.1': 'no', 'entry.2': '   ' }, names)).toBe('rsvp.needName');
+  });
+
+  it('answers with keys the translations actually carry', () => {
+    // A renamed key would otherwise surface to the guest as raw dot-notation.
+    for (const key of ['rsvp.needAnswer', 'rsvp.needName']) {
+      expect(translations.en[key]).toBeTruthy();
+    }
   });
 
   it('does not require the optional message', () => {

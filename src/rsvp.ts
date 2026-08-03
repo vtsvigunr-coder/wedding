@@ -10,6 +10,8 @@
  * submission all the same.
  */
 
+import { t } from './i18n';
+
 export type RsvpState = 'idle' | 'sending' | 'sent' | 'error';
 
 export interface RsvpFields {
@@ -26,13 +28,15 @@ export function readFields(form: HTMLFormElement): RsvpFields {
 }
 
 /**
- * What is wrong with the answers, or null when they are good to send. Only the
+ * The translation key for what is wrong with the answers, or null when they
+ * are good to send. A key rather than a sentence, so this stays a pure check
+ * and the wording follows whichever language the guest is reading. Only the
  * two questions the design marks as required are checked — the message is
  * explicitly optional.
  */
 export function validate(fields: RsvpFields, names: { attendance: string; guest: string }): string | null {
-  if (!fields[names.attendance]) return 'Please tell us whether you can come.';
-  if (!fields[names.guest]?.trim()) return 'Please tell us your name.';
+  if (!fields[names.attendance]) return 'rsvp.needAnswer';
+  if (!fields[names.guest]?.trim()) return 'rsvp.needName';
   return null;
 }
 
@@ -80,22 +84,22 @@ export function initRsvp(): void {
     const fields = readFields(form);
     const problem = validate(fields, names);
     if (problem) {
-      setState('error', problem);
+      setState('error', t(problem));
       return;
     }
 
     if (!isConfigured(form.action)) {
-      setState('error', 'The form is not connected yet — please tell the couple directly.');
+      setState('error', t('rsvp.notConnected'));
       return;
     }
 
-    setState('sending', 'Sending…');
+    setState('sending', t('rsvp.sending'));
     try {
       await submit(form.action, fields);
-      setState('sent', 'Thank you! Your answer is on its way to us.');
+      setState('sent', t('rsvp.sent'));
       form.reset();
     } catch {
-      setState('error', 'That did not go through. Please try again in a moment.');
+      setState('error', t('rsvp.failed'));
     }
   });
 
