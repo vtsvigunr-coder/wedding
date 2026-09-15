@@ -6,16 +6,30 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 40px 31px;
+  /* The extra room at the foot is the buy bar's; see `--cta-height`. */
+  padding: 40px 31px calc(40px + var(--cta-height) + env(safe-area-inset-bottom));
   background: #f1eee9;
 }
 
-.site-footer__title {
-  margin: 0;
+/* The same lockup the header opens with, at the size the closing line held. */
+.site-footer__logo {
+  display: flex;
+  align-items: center;
+  flex: none;
+  text-decoration: none;
+}
+
+.site-footer__mark {
+  width: 24px;
+  height: auto;
+}
+
+.site-footer__word {
+  margin-left: 7px;
   font-family: var(--font-remark);
-  font-size: 20px;
-  line-height: 24px;
-  color: #452d2d;
+  font-size: 21px;
+  line-height: 1;
+  color: var(--color-brand);
 }
 
 /* The ornament is an arrow, so it does the job of one: back up to the hero. */

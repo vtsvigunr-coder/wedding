@@ -1,0 +1,133 @@
+/*
+ * The buy bar. Fixed to the bottom edge rather than placed in a section,
+ * because the question it answers — "can I have one of these?" — arrives
+ * wherever it arrives; and it keeps its place over the footer, which is the
+ * one screen where the answer matters most.
+ *
+ * Above the header's z-index would put it over a menu it has nothing to do
+ * with; above the preloader's is what keeps it out from under the hero.
+ */
+.cta {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  z-index: 15;
+  width: 100%;
+  max-width: var(--content-max-width);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 24px calc(14px + env(safe-area-inset-bottom));
+  text-decoration: none;
+  /* Out of the way until the page has moved; see cta.ts. Also invisible to the
+     pointer while hidden, so it cannot swallow a tap meant for the hero. */
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 12px;
+  transition: opacity 0.5s ease, translate 0.5s ease, visibility 0.5s;
+}
+
+/* Two classes deep on purpose: index.html holds the bar back with a `.cta`
+   rule of its own until the bundle lands, and a single class would only tie
+   with it. */
+.cta.cta--shown {
+  opacity: 1;
+  visibility: visible;
+  translate: none;
+}
+
+/*
+ * The same ramp the hero's scroll hint sits on — six sheets, each blurring
+ * twice as hard as the one above it and masked to fade out higher, so the page
+ * dissolves into the bar instead of meeting it at a seam. preloader.css
+ * carries the full reasoning for why it is built this way and not as one
+ * masked `backdrop-filter`.
+ */
+.cta__blur {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cta__blur::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.28);
+  -webkit-mask-image: linear-gradient(to top, black 45%, transparent 100%);
+  mask-image: linear-gradient(to top, black 45%, transparent 100%);
+}
+
+.cta__blur > div {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(var(--radius));
+  -webkit-backdrop-filter: blur(var(--radius));
+  -webkit-mask-image: linear-gradient(to top, black var(--solid), transparent var(--fade));
+  mask-image: linear-gradient(to top, black var(--solid), transparent var(--fade));
+}
+
+.cta__blur > div:nth-child(1) { --radius: 0.25px; --solid: 60%; --fade: 100%; }
+.cta__blur > div:nth-child(2) { --radius: 0.5px; --solid: 48%; --fade: 84%; }
+.cta__blur > div:nth-child(3) { --radius: 1px; --solid: 36%; --fade: 68%; }
+.cta__blur > div:nth-child(4) { --radius: 2px; --solid: 24%; --fade: 52%; }
+.cta__blur > div:nth-child(5) { --radius: 4px; --solid: 12%; --fade: 36%; }
+.cta__blur > div:nth-child(6) { --radius: 8px; --solid: 0%; --fade: 20%; }
+
+/* Lifted over the blur, which is positioned and would otherwise paint on top. */
+.cta__text,
+.cta__button {
+  position: relative;
+  z-index: 1;
+}
+
+.cta__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cta__note {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.44px;
+  line-height: 14px;
+  color: rgba(69, 45, 45, 0.6);
+}
+
+.cta__price {
+  font-family: var(--font-remark);
+  font-size: 22px;
+  line-height: 1;
+  color: var(--color-brand);
+}
+
+.cta__button {
+  flex: none;
+  padding: 11px 20px;
+  border-radius: 999px;
+  background: var(--color-brand);
+  color: #fff;
+  font-family: var(--font-remark);
+  font-size: 15px;
+  line-height: 18px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.cta:hover .cta__button {
+  opacity: 0.85;
+}
+
+.cta:active .cta__button {
+  transform: translateY(1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta,
+  .cta__button {
+    transition: none;
+  }
+}

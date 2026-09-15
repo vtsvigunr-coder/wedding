@@ -279,3 +279,95 @@
     transform: translateY(5px);
   }
 }
+
+/*
+ * The invitation printed on the unrolled scroll.
+ *
+ * The design draws it on a 405x720 card, and the video is that same card. So
+ * rather than place the lines against the viewport — where a taller phone
+ * would slide them off the paper the video crops to fit — the frame below
+ * repeats `object-fit: cover`'s own arithmetic in CSS: the video's width is
+ * whichever is larger, the box it fills or the width its aspect ratio needs to
+ * cover that box's height. Lay a frame of exactly that size over it, and every
+ * line can be positioned as the percentage of the card the design gives it.
+ *
+ * `font-size` is set to the frame's width as well, so the lines can be sized
+ * in `em` as fractions of the design's 405px — the type then scales with the
+ * card art it sits on instead of drifting out of proportion to it.
+ */
+.preloader__intro {
+  --frame-width: max(min(100vw, var(--content-max-width)), calc(100svh * 405 / 720));
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--frame-width);
+  aspect-ratio: 405 / 720;
+  font-size: var(--frame-width);
+  color: var(--color-mustard);
+  pointer-events: none;
+  /* Held back with the scroll hint: over the rolled-up scroll these lines
+     would be floating on nothing. */
+  opacity: 0;
+  transition: opacity 0.9s ease 0.1s;
+}
+
+.preloader--finished .preloader__intro {
+  opacity: 1;
+}
+
+.preloader__intro p {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.preloader__label {
+  /* 16px, with the design's 0.64px of tracking, on the 405px card. */
+  top: 33.472%;
+  font-family: var(--font-sans);
+  font-size: 0.0395em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Lifted by the overhang the padding adds back; see `--script-overhang`. */
+.preloader__name {
+  padding-block: var(--script-overhang);
+  font-family: var(--font-script);
+  font-weight: 400;
+  /* 44px on the 405px card. */
+  font-size: 0.1086em;
+}
+
+.preloader__name--first {
+  top: calc(42.361% - var(--script-overhang));
+}
+
+.preloader__name--second {
+  top: calc(52.639% - var(--script-overhang));
+}
+
+.preloader__amp {
+  top: 49.583%;
+  font-family: var(--font-remark);
+  /* 26px on the 405px card. */
+  font-size: 0.0642em;
+}
+
+.preloader__date {
+  top: 63.611%;
+  font-family: var(--font-remark);
+  /* 18px on the 405px card. */
+  font-size: 0.0444em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader__intro {
+    transition: none;
+  }
+}

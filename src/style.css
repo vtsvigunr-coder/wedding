@@ -85,6 +85,10 @@
   --color-accent: #7e6f5d;
   --color-dark-mustard: #6a5e43;
   --color-light-brown: #c3937c;
+  /* The ink the invitation's own lines are set in, from the design. */
+  --color-mustard: #817355;
+  /* The maker's mark keeps its brand ink rather than the invitation's. */
+  --color-brand: #681010;
   --font-remark: 'LT Remark', serif;
   --font-script: 'Good Vibes Pro', cursive;
   --font-sans: 'Montserrat', sans-serif;
@@ -101,6 +105,10 @@
    * tracks the title it is used on rather than assuming 61px.
    */
   --script-overhang: 0.5em;
+  /* What the buy bar covers at the foot of the page. The footer keeps this
+     much clear below its own padding, so the closing lockup is never read
+     through the bar sitting on top of it. */
+  --cta-height: 68px;
   /* What the fixed header covers. Pinned stages scale themselves to fit the
      space below it, so their titles never slide up underneath. */
   --header-height: 72px;

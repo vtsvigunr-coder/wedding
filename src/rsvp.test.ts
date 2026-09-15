@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { translations } from './i18n';
+import { strings } from './i18n';
 import { encodeFields, isConfigured, readFields, validate } from './rsvp';
 
 const names = { attendance: 'entry.1', guest: 'entry.2' };
@@ -50,7 +50,7 @@ describe('validate', () => {
   it('answers with keys the translations actually carry', () => {
     // A renamed key would otherwise surface to the guest as raw dot-notation.
     for (const key of ['rsvp.needAnswer', 'rsvp.needName']) {
-      expect(translations.en[key]).toBeTruthy();
+      expect(strings[key]).toBeTruthy();
     }
   });
 
