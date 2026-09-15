@@ -14,7 +14,7 @@
     {
       "source": "/(.*)",
       "has": [{ "type": "host", "value": "hira-and-azain.vercel.app" }],
-      "destination": "https://invitated.com/hira-azain/$1",
+      "destination": "https://www.invitated.com/hira-azain/$1",
       "permanent": false
     }
   ]
