@@ -6,8 +6,10 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  /* The extra room at the foot is the buy bar's; see `--cta-height`. */
-  padding: 40px 31px calc(40px + var(--cta-height) + env(safe-area-inset-bottom));
+  /* The extra room at the foot is the buy bar's, plus the reach of the blur
+     ramp above it — the lockup sits clear of both rather than being read
+     through them. See `--cta-height` and `.cta__blur`. */
+  padding: 40px 31px calc(72px + var(--cta-height) + env(safe-area-inset-bottom));
   background: #f1eee9;
 }
 

@@ -108,7 +108,7 @@
   /* What the buy bar covers at the foot of the page. The footer keeps this
      much clear below its own padding, so the closing lockup is never read
      through the bar sitting on top of it. */
-  --cta-height: 68px;
+  --cta-height: 80px;
   /* What the fixed header covers. Pinned stages scale themselves to fit the
      space below it, so their titles never slide up underneath. */
   --header-height: 72px;

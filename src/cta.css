@@ -17,9 +17,8 @@
   max-width: var(--content-max-width);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 14px 24px calc(14px + env(safe-area-inset-bottom));
+  justify-content: center;
+  padding: 16px 24px calc(16px + env(safe-area-inset-bottom));
   text-decoration: none;
   /* Out of the way until the page has moved; see cta.ts. Also invisible to the
      pointer while hidden, so it cannot swallow a tap meant for the hero. */
@@ -44,10 +43,14 @@
  * dissolves into the bar instead of meeting it at a seam. preloader.css
  * carries the full reasoning for why it is built this way and not as one
  * masked `backdrop-filter`.
+ *
+ * It reaches well above the bar's own box — a ramp only as tall as the button
+ * has to go from nothing to full blur in 68px, which is a gradient steep
+ * enough to read as an edge. The extra height is what lets it arrive.
  */
 .cta__blur {
   position: absolute;
-  inset: 0;
+  inset: -120px 0 0;
   pointer-events: none;
 }
 
@@ -55,9 +58,9 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.28);
-  -webkit-mask-image: linear-gradient(to top, black 45%, transparent 100%);
-  mask-image: linear-gradient(to top, black 45%, transparent 100%);
+  background: rgba(255, 255, 255, 0.32);
+  -webkit-mask-image: linear-gradient(to top, black 30%, transparent 85%);
+  mask-image: linear-gradient(to top, black 30%, transparent 85%);
 }
 
 .cta__blur > div {
@@ -69,51 +72,25 @@
   mask-image: linear-gradient(to top, black var(--solid), transparent var(--fade));
 }
 
-.cta__blur > div:nth-child(1) { --radius: 0.25px; --solid: 60%; --fade: 100%; }
-.cta__blur > div:nth-child(2) { --radius: 0.5px; --solid: 48%; --fade: 84%; }
-.cta__blur > div:nth-child(3) { --radius: 1px; --solid: 36%; --fade: 68%; }
-.cta__blur > div:nth-child(4) { --radius: 2px; --solid: 24%; --fade: 52%; }
-.cta__blur > div:nth-child(5) { --radius: 4px; --solid: 12%; --fade: 36%; }
-.cta__blur > div:nth-child(6) { --radius: 8px; --solid: 0%; --fade: 20%; }
+.cta__blur > div:nth-child(1) { --radius: 0.5px; --solid: 60%; --fade: 100%; }
+.cta__blur > div:nth-child(2) { --radius: 1px; --solid: 48%; --fade: 84%; }
+.cta__blur > div:nth-child(3) { --radius: 2px; --solid: 36%; --fade: 68%; }
+.cta__blur > div:nth-child(4) { --radius: 4px; --solid: 24%; --fade: 52%; }
+.cta__blur > div:nth-child(5) { --radius: 8px; --solid: 12%; --fade: 36%; }
+.cta__blur > div:nth-child(6) { --radius: 16px; --solid: 0%; --fade: 20%; }
 
 /* Lifted over the blur, which is positioned and would otherwise paint on top. */
-.cta__text,
 .cta__button {
   position: relative;
   z-index: 1;
-}
-
-.cta__text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-
-.cta__note {
-  font-family: var(--font-sans);
-  font-size: 11px;
-  letter-spacing: 0.44px;
-  line-height: 14px;
-  color: rgba(69, 45, 45, 0.6);
-}
-
-.cta__price {
-  font-family: var(--font-remark);
-  font-size: 22px;
-  line-height: 1;
-  color: var(--color-brand);
-}
-
-.cta__button {
   flex: none;
-  padding: 11px 20px;
+  padding: 14px 32px;
   border-radius: 999px;
   background: var(--color-brand);
   color: #fff;
   font-family: var(--font-remark);
-  font-size: 15px;
-  line-height: 18px;
+  font-size: 17px;
+  line-height: 20px;
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 

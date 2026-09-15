@@ -25,7 +25,7 @@ export const LANG = 'en';
 export type Dictionary = Record<string, string>;
 
 export const strings: Dictionary = {
-  'doc.title': 'Zohan & Rose — Invitation',
+  'doc.title': 'Hira & Azain — Invitation',
 
   'header.home': 'Invitated',
   'header.sound': 'Toggle music',
@@ -62,7 +62,7 @@ export const strings: Dictionary = {
   'location.venueAlt': 'The venue',
   'location.directions': 'Get directions',
   'location.calendar': 'Calendar',
-  'location.event': 'Zohan & Rose — Wedding',
+  'location.event': 'Hira & Azain — Wedding',
 
   'dress.label': 'What to wear',
   'dress.title': 'Dress code',
@@ -88,10 +88,9 @@ export const strings: Dictionary = {
   'rsvp.failed': 'That did not go through. Please try again in a moment.',
 
   'final.wish': 'We would be happy to share<br />this day together.',
-  'final.names': 'Zohan & Rose',
+  'final.names': 'Hira & Azain',
 
-  'cta.note': 'Your own invitation like this one',
-  'cta.buy': 'Get yours',
+  'cta.buy': 'Buy for $49',
 
   'footer.up': 'Back to the top',
 };

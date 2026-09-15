@@ -40,7 +40,7 @@ describe('escapeIcsText', () => {
 
 describe('buildIcs', () => {
   const event = {
-    title: 'Zohan & Rose — Wedding',
+    title: 'Hira & Azain — Wedding',
     start: '2026-09-26T16:00',
     end: '2026-09-26T21:00',
     location: 'Grand Celebration Hall, 11th Avenue, New York State',
@@ -63,7 +63,7 @@ describe('buildIcs', () => {
   });
 
   it('carries the escaped title and address', () => {
-    expect(ics).toContain('SUMMARY:Zohan & Rose — Wedding');
+    expect(ics).toContain('SUMMARY:Hira & Azain — Wedding');
     expect(ics).toContain('LOCATION:Grand Celebration Hall\\, 11th Avenue\\, New York State');
   });
 
