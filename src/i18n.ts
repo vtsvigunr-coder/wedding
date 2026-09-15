@@ -90,7 +90,7 @@ export const strings: Dictionary = {
   'final.wish': 'We would be happy to share<br />this day together.',
   'final.names': 'Hira & Azain',
 
-  'cta.buy': 'Buy for $49',
+  'cta.buy': 'Get this template',
 
   'footer.up': 'Back to the top',
 };

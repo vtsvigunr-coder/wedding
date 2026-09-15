@@ -33,8 +33,15 @@ export function letterFrameIndex(progress: number, frameCount: number, openBy = 
   return Math.min(frameCount - 1, Math.round(scrubbed * (frameCount - 1)));
 }
 
+/*
+ * The only asset address the page builds in script rather than writing in the
+ * markup, so it is the only one Vite cannot rewrite for us. The invitation is
+ * served under a path of its own on invitated.com — `BASE_URL` is what that
+ * path is, `/` when the site is served from a root — so the frames are asked
+ * for relative to it rather than from the domain's root, where they are not.
+ */
 export function letterFrameSrc(index: number): string {
-  return `/letter/frame-${String(index).padStart(2, '0')}.webp`;
+  return `${import.meta.env.BASE_URL}letter/frame-${String(index).padStart(2, '0')}.webp`;
 }
 
 function createFrame(index: number): HTMLImageElement {

@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
     <title>Hira &amp; Azain — Invitation</title>
+    <!--
+      The invitation is a template on show, not a page to be found: it is
+      reached from invitated.com and nowhere else, and every template is kept
+      out of search the same way. The header in vercel.json says the same thing
+      for the assets, which a `meta` cannot reach.
+    -->
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href="https://invitated.com/hira-azain" />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>" />
 
     <!-- The two faces the first screen is set in. Without these the browser
@@ -328,11 +336,15 @@
       It holds off until the page has actually moved: on the opening screen the
       hero's own "Scroll down" sits in this exact spot, and two labels stacked
       on one edge read as a mistake. Once it has arrived it stays for good.
+
+      The link carries the template's own name to the pricing page, which is
+      what tells us afterwards which invitation sold the sale: the page passes
+      it on to Stripe as the checkout's `client_reference_id`.
     -->
     <a
       class="cta"
       id="cta"
-      href="https://buy.stripe.com/7sYcMYcXz4q8gsWac24Vy08"
+      href="https://invitated.com/pricing?template=hira-azain"
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -341,7 +353,7 @@
       <div class="cta__blur" aria-hidden="true">
         <div></div><div></div><div></div><div></div><div></div><div></div>
       </div>
-      <span class="cta__button" data-i18n="cta.buy">Buy for $49</span>
+      <span class="cta__button" data-i18n="cta.buy">Get this template</span>
     </a>
 
     <!-- `none`, not `auto`: the track is 1.4 MB and nothing plays it until the

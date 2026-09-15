@@ -58,8 +58,9 @@ describe('letterFrameIndex', () => {
 
 describe('letterFrameSrc', () => {
   it('zero-pads the frame number to match the built filenames', () => {
-    expect(letterFrameSrc(0)).toBe('/letter/frame-00.webp');
-    expect(letterFrameSrc(7)).toBe('/letter/frame-07.webp');
-    expect(letterFrameSrc(59)).toBe('/letter/frame-59.webp');
+    const base = import.meta.env.BASE_URL;
+    expect(letterFrameSrc(0)).toBe(`${base}letter/frame-00.webp`);
+    expect(letterFrameSrc(7)).toBe(`${base}letter/frame-07.webp`);
+    expect(letterFrameSrc(59)).toBe(`${base}letter/frame-59.webp`);
   });
 });
