@@ -15,9 +15,30 @@ export function shouldShowCta(scrollY: number, shown: boolean): boolean {
   return shown || scrollY > CTA_REVEAL_AT;
 }
 
+/**
+ * Whether this page is being shown inside something of ours.
+ *
+ * In the portal's template gallery the bar is not an offer, it is a
+ * distraction: whoever is looking has bought one already and is choosing
+ * between designs. The gallery frames these pages with `?embed=1` for exactly
+ * this, and the blurred strip the bar carries goes with it — it belongs to the
+ * bar, not to the invitation.
+ */
+export function isEmbedded(search: string): boolean {
+  return new URLSearchParams(search).has('embed');
+}
+
 export function initCta(): void {
   const cta = document.getElementById('cta');
   if (!cta) return;
+
+  /* Taken out rather than left unshown: it is in the markup already, and
+     something that is only ever one class away from appearing is something
+     that will one day appear. */
+  if (isEmbedded(window.location.search)) {
+    cta.remove();
+    return;
+  }
 
   let shown = false;
 
