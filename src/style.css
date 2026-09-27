@@ -163,3 +163,21 @@ button {
   cursor: pointer;
   background: none;
 }
+
+/*
+ * No scroll bar, on any computer. The invitation is read as a phone reads
+ * it, and a phone draws no bar - but Windows draws a grey gutter with a white
+ * track down the side of the page, and in the constructor's phone that
+ * gutter sat inside the screen. Scrolling itself is untouched.
+ */
+html,
+body,
+* {
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none;
+}
