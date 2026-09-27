@@ -362,5 +362,46 @@
     <audio id="bg-music" src="/music/wedding-music.mp3" loop preload="none"></audio>
 
     <script type="module" src="/src/main.ts"></script>
+      <!--
+      The phone's scroll indicator, drawn only when this page is framed - in
+      the Invitated constructor's phone, where the invitation stands in for a
+      phone and the computer's own bar is hidden. A thin capsule over the page
+      that shows while it scrolls and fades once it stops; the same one the
+      constructor draws over its own preview.
+    -->
+    <script>
+      (function () {
+        if (window.self === window.top) return;
+        var bar = document.createElement('div');
+        bar.setAttribute('aria-hidden', 'true');
+        bar.style.cssText =
+          'position:fixed;top:0;right:3px;width:3px;border-radius:999px;' +
+          'background:rgba(0,0,0,.45);box-shadow:0 0 0 .5px rgba(255,255,255,.45);' +
+          'opacity:0;pointer-events:none;z-index:2147483647;' +
+          (matchMedia('(prefers-reduced-motion: reduce)').matches ? '' : 'transition:opacity .3s ease;');
+        var timer;
+        function moved(event) {
+          var box = event.target;
+          var page = !box || box === document || box === document.documentElement || box === document.body;
+          var view = page ? innerHeight : box.clientHeight;
+          var total = page ? document.documentElement.scrollHeight : box.scrollHeight;
+          var top = page ? scrollY : box.scrollTop;
+          if (!page && view < innerHeight * 0.6) return;
+          if (total <= view + 1) return;
+          var track = innerHeight - 6;
+          var length = Math.max(36, (track * view) / total);
+          var share = Math.min(1, Math.max(0, top / (total - view)));
+          bar.style.height = length + 'px';
+          bar.style.transform = 'translateY(' + (3 + share * (track - length)) + 'px)';
+          bar.style.opacity = '1';
+          clearTimeout(timer);
+          timer = setTimeout(function () {
+            bar.style.opacity = '0';
+          }, 900);
+        }
+        document.addEventListener('scroll', moved, { capture: true, passive: true });
+        document.body.appendChild(bar);
+      })();
+    </script>
   </body>
 </html>
