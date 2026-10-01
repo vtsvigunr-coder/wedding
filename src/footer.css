@@ -62,3 +62,13 @@
     transition: none;
   }
 }
+
+/* "Design by" before the lockup, quieter than the name it credits. */
+.site-footer__design {
+  margin-right: 8px;
+  font-family: var(--font-remark);
+  font-size: 15px;
+  line-height: 1;
+  color: var(--color-brand);
+  opacity: 0.7;
+}
