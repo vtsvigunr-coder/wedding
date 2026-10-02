@@ -13,25 +13,21 @@
   background: #f1eee9;
 }
 
-/* The same lockup the header opens with, at the size the closing line held. */
+/* "Design by Invitated" in words, the studio's name the link. */
 .site-footer__logo {
-  display: flex;
-  align-items: center;
   flex: none;
-  text-decoration: none;
-}
-
-.site-footer__mark {
-  width: 24px;
-  height: auto;
-}
-
-.site-footer__word {
-  margin-left: 7px;
+  margin: 0;
   font-family: var(--font-remark);
-  font-size: 21px;
-  line-height: 1;
+  font-size: 17px;
+  line-height: 1.2;
   color: var(--color-brand);
+}
+
+.site-footer__logo a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
 }
 
 /* The ornament is an arrow, so it does the job of one: back up to the hero. */
@@ -61,14 +57,4 @@
   .site-footer__up {
     transition: none;
   }
-}
-
-/* "Design by" before the lockup, quieter than the name it credits. */
-.site-footer__design {
-  margin-right: 8px;
-  font-family: var(--font-remark);
-  font-size: 15px;
-  line-height: 1;
-  color: var(--color-brand);
-  opacity: 0.7;
 }
