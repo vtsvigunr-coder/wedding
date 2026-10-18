@@ -10,6 +10,7 @@ export const ru: Dictionary = {
   'doc.title': 'Хира & Азаин — приглашение',
 
   'header.home': 'Invitated',
+  'header.homeLink': 'https://www.invitated.com/ru',
   'header.sound': 'Включить или выключить музыку',
 
   'preloader.click': 'Нажмите',

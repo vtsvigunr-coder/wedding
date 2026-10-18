@@ -38,6 +38,7 @@ export const strings: Dictionary = {
   'doc.title': 'Hira & Azain — Invitation',
 
   'header.home': 'Invitated',
+  'header.homeLink': 'https://www.invitated.com',
   'header.sound': 'Toggle music',
 
   'preloader.click': 'Click',

@@ -112,3 +112,12 @@ describe('the page', () => {
     }
   });
 });
+
+describe('the way home', () => {
+  it('goes to the Russian site from the Russian page', async () => {
+    const html = (await import('../index.html?raw')).default;
+    expect(html).toContain('href:header.homeLink');
+    expect(t('header.homeLink', 'ru')).toBe('https://www.invitated.com/ru');
+    expect(t('header.homeLink', 'en')).toBe('https://www.invitated.com');
+  });
+});
