@@ -3,10 +3,10 @@
  * `data-i18n*` attributes in the markup, so a change of copy is a dictionary
  * entry rather than a hunt through the sections.
  *
- * The invitation is written in English alone. It carried Russian and Uzbek
- * behind a switcher until the site settled on one language; the table stayed,
- * because the markup is keyed to it and a single place to edit the wording is
- * worth keeping.
+ * The invitation is written in English, with no switcher. Its one other
+ * language is Russian, for the Russian site: at invitated.com/ru/hira-azain/
+ * (or with ?lang=ru, to try it) the page reads `i18n-ru.ts` instead, and has
+ * no way back to English - the English page is its own address.
  *
  * Two things deliberately stay out of this table:
  *
@@ -20,19 +20,32 @@
  * markup that can ever reach `innerHTML` is markup written here.
  */
 
-export const LANG = 'en';
+import { ru } from './i18n-ru';
+
+export type Lang = 'en' | 'ru';
 
 export type Dictionary = Record<string, string>;
+
+/** The language an address reads in: Russian on the Russian site's, English anywhere else. */
+export function languageAt(pathname: string, search: string): Lang {
+  return pathname.startsWith('/ru/') || new URLSearchParams(search).get('lang') === 'ru' ? 'ru' : 'en';
+}
+
+/** This page's language. */
+export const LANG: Lang = typeof location === 'undefined' ? 'en' : languageAt(location.pathname, location.search);
 
 export const strings: Dictionary = {
   'doc.title': 'Hira & Azain — Invitation',
 
   'header.home': 'Invitated',
+  'header.homeLink': 'https://www.invitated.com',
   'header.sound': 'Toggle music',
 
   'preloader.click': 'Click',
   'preloader.scroll': 'Scroll down',
   'preloader.label': 'Wedding Day',
+  'preloader.first': 'Hira',
+  'preloader.second': 'Azain',
 
   'greeting.label': 'Our wedding day',
   'greeting.title': 'Dear guest !',
@@ -93,34 +106,35 @@ export const strings: Dictionary = {
   'cta.buy': 'Get this template',
 
   'footer.up': 'Back to the top',
+  'footer.credit': 'Design by <a href="https://www.invitated.com" target="_blank" rel="noopener noreferrer">Invitated</a>',
 };
 
 /**
  * A string from the table. Falls back to the key itself — a missing entry
  * should read oddly, never blank the element.
  */
-export function t(key: string): string {
-  return strings[key] ?? key;
+export function t(key: string, lang: Lang = LANG): string {
+  return (lang === 'ru' ? ru[key] : undefined) ?? strings[key] ?? key;
 }
 
 /**
  * `attr:key` pairs, separated by `;` — `aria-label:header.sound`. Anything
  * malformed is skipped rather than written as an attribute called nothing.
  */
-function applyAttrs(element: HTMLElement, spec: string): void {
+function applyAttrs(element: HTMLElement, spec: string, lang: Lang): void {
   for (const pair of spec.split(';')) {
     const [attr, key] = pair.split(':').map((part) => part.trim());
     if (!attr || !key) continue;
-    element.setAttribute(attr, t(key));
+    element.setAttribute(attr, t(key, lang));
   }
 }
 
-export function applyStrings(root: ParentNode = document): void {
-  document.documentElement.lang = LANG;
-  document.title = t('doc.title');
+export function applyStrings(root: ParentNode = document, lang: Lang = LANG): void {
+  document.documentElement.lang = lang;
+  document.title = t('doc.title', lang);
 
   for (const element of root.querySelectorAll<HTMLElement>('[data-i18n]')) {
-    element.textContent = t(element.dataset.i18n ?? '');
+    element.textContent = t(element.dataset.i18n ?? '', lang);
   }
 
   // These carry line breaks, so they are written as markup. Only a key that is
@@ -128,7 +142,7 @@ export function applyStrings(root: ParentNode = document): void {
   // falls back to text, so nothing outside this file can ever reach innerHTML.
   for (const element of root.querySelectorAll<HTMLElement>('[data-i18n-html]')) {
     const key = element.dataset.i18nHtml ?? '';
-    const known = strings[key];
+    const known = strings[key] === undefined ? undefined : t(key, lang);
     if (known === undefined) {
       element.textContent = key;
     } else {
@@ -137,7 +151,7 @@ export function applyStrings(root: ParentNode = document): void {
   }
 
   for (const element of root.querySelectorAll<HTMLElement>('[data-i18n-attr]')) {
-    applyAttrs(element, element.dataset.i18nAttr ?? '');
+    applyAttrs(element, element.dataset.i18nAttr ?? '', lang);
   }
 }
 
