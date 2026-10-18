@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { applyStrings, strings, t } from './i18n';
+import { applyStrings, languageAt, strings, t } from './i18n';
+import { ru } from './i18n-ru';
 
 function mount(html: string): HTMLElement {
   const root = document.createElement('div');
@@ -68,5 +69,46 @@ describe('applyStrings', () => {
   it('tells the page which language it is in, for screen readers and hyphenation', () => {
     applyStrings(mount(''));
     expect(document.documentElement.lang).toBe('en');
+  });
+});
+
+describe('the Russian site', () => {
+  it('reads Russian at invitated.com/ru/hira-azain/', () => {
+    expect(languageAt('/ru/hira-azain/', '')).toBe('ru');
+  });
+
+  it('reads Russian anywhere with ?lang=ru, to try it', () => {
+    expect(languageAt('/', '?lang=ru')).toBe('ru');
+  });
+
+  it('stays English at its own address', () => {
+    expect(languageAt('/hira-azain/', '')).toBe('en');
+  });
+
+  it('has every word in Russian', () => {
+    const missing = Object.keys(strings).filter((key) => !ru[key]?.trim());
+    expect(missing).toEqual([]);
+  });
+
+  it('keeps the markup English carries', () => {
+    const tags = (value: string) => (value.match(/<\/?[a-z0-9]+/gi) ?? []).join();
+    expect(Object.keys(ru).filter((key) => tags(ru[key]) !== tags(strings[key] ?? ''))).toEqual([]);
+  });
+
+  it('writes Russian into the page and says so', () => {
+    document.body.innerHTML = '<h2 data-i18n="bouquet.title"></h2>';
+    applyStrings(document, 'ru');
+    expect(document.querySelector('h2')?.textContent).toBe(ru['bouquet.title']);
+    expect(document.documentElement.lang).toBe('ru');
+  });
+});
+
+describe('the page', () => {
+  it('keys every name and credit it shows', async () => {
+    const html = (await import('../index.html?raw')).default;
+    for (const key of ['preloader.first', 'preloader.second', 'footer.credit']) {
+      expect(html, key).toContain(`"${key}"`);
+      expect(ru[key], key).toBeTruthy();
+    }
   });
 });
